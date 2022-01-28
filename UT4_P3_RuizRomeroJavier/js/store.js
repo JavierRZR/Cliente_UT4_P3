@@ -1,5 +1,8 @@
 "use strict";
 
+import { InvalidAccessConstructorException, InvalidValueException, EmptyValueException } from "./exceptions.js";
+import { Coord } from "./coord.js";
+
 class Store {
     static ERCIF = /^[A-Z][0-9]{8}$/i;
     static ERPHONE = /^[0-9]{9}$/;
@@ -59,7 +62,7 @@ class Store {
     }
 
     set phone(value) {
-        if (!(Store.ERPHONE.test(value))) throw new InvalidValueException("Phone",value);
+        if (!(Store.ERPHONE.test(value))) throw new InvalidValueException("Phone", value);
         this.#phone = value;
     }
 
@@ -79,3 +82,6 @@ Object.defineProperty(Store.prototype, "name", { enumerable: true });
 Object.defineProperty(Store.prototype, "address", { enumerable: true });
 Object.defineProperty(Store.prototype, "phone", { enumerable: true });
 Object.defineProperty(Store.prototype, "coords", { enumerable: true });
+
+
+export { Store };

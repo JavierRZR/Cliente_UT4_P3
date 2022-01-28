@@ -1,6 +1,6 @@
 "use strict";
 
-// import { InvalidAccessConstructorException, InvalidValueException } from "./exceptions";
+import { InvalidAccessConstructorException, InvalidValueException } from "./exceptions.js";
 
 class Coord {
 
@@ -66,3 +66,5 @@ class Coord {
 
 Object.defineProperty(Coord.prototype, "latitude", { enumerable: true });
 Object.defineProperty(Coord.prototype, "longitude", { enumerable: true });
+
+export { Coord };

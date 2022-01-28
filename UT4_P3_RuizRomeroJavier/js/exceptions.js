@@ -47,3 +47,11 @@ class WrongObjectTypeException extends BaseException {
         this.name = "WrongObjectTypeException";
     }
 }
+
+
+export { BaseException,
+     WrongObjectTypeException,
+      AbstractClassException,
+       InvalidAccessConstructorException,
+        InvalidValueException,
+         EmptyValueException };

@@ -1,9 +1,19 @@
 "use strict";
 
+import {
+    AbstractClassException,
+    InvalidAccessConstructorException,
+    InvalidValueException,
+    EmptyValueException
+} from "./exceptions.js";
+
+
+
+let Product, Plant, Manga, Furniture;
 (() => {
     let abstractCreateLock = true;
 
-    class Product {
+    class InternProduct {
 
         //Atributos static
         static TAXES = 21;
@@ -16,7 +26,7 @@
         #tax;
         #images;
 
-        constructor(serial, name, price, tax = Product.TAXES) {
+        constructor(serial, name, price, tax = InternProduct.TAXES) {
             if (!new.target) throw new InvalidAccessConstructorException();
             if (abstractCreateLock) throw new AbstractClassException("Product");
             abstractCreateLock = true;
@@ -95,15 +105,15 @@
             return this.#price - (this.#price * this.#tax);
         }
     }
-    Object.defineProperty(Product.prototype, "serial", { enumerable: true });
-    Object.defineProperty(Product.prototype, "name", { enumerable: true });
-    Object.defineProperty(Product.prototype, "price", { enumerable: true });
-    Object.defineProperty(Product.prototype, "description", { enumerable: true });
-    Object.defineProperty(Product.prototype, "tax", { enumerable: true });
-    Object.defineProperty(Product.prototype, "images", { enumerable: true });
+    Object.defineProperty(InternProduct.prototype, "serial", { enumerable: true });
+    Object.defineProperty(InternProduct.prototype, "name", { enumerable: true });
+    Object.defineProperty(InternProduct.prototype, "price", { enumerable: true });
+    Object.defineProperty(InternProduct.prototype, "description", { enumerable: true });
+    Object.defineProperty(InternProduct.prototype, "tax", { enumerable: true });
+    Object.defineProperty(InternProduct.prototype, "images", { enumerable: true });
 
 
-    class Plant extends Product {
+    class InternPlant extends InternProduct {
 
         //Atributos static
         static ERAMBIENT = /^(humidity|dryland|hot|cold)$/i
@@ -120,12 +130,12 @@
         constructor(serial, name, price, ambient, leaf, flower = "none", color = "GREEN") {
             if (!new.target) throw new InvalidAccessConstructorException();
             abstractCreateLock = false;
-            super(serial, name, price, Plant.TAXES);
+            super(serial, name, price, InternPlant.TAXES);
 
             //Validación de argumentos
-            if (!(Plant.ERAMBIENT.test(ambient))) throw new InvalidValueException("Ambient", ambient);
-            if (!(Plant.ERLEAF.test(leaf))) throw new InvalidValueException("Leaf", leaf);
-            if (!(Plant.ERFLOWER.test(flower))) throw new InvalidValueException("Flower", flower);
+            if (!(InternPlant.ERAMBIENT.test(ambient))) throw new InvalidValueException("Ambient", ambient);
+            if (!(InternPlant.ERLEAF.test(leaf))) throw new InvalidValueException("Leaf", leaf);
+            if (!(InternPlant.ERFLOWER.test(flower))) throw new InvalidValueException("Flower", flower);
             if (!color) throw new InvalidValueException("Color", color);
 
             //Asignación de atributos
@@ -151,15 +161,15 @@
 
         //SETTER
         set ambient(value) {
-            if (!(Plant.ERAMBIENT.test(value))) throw new InvalidValueException("Ambient", value);
+            if (!(InternPlant.ERAMBIENT.test(value))) throw new InvalidValueException("Ambient", value);
             this.#ambient = value;
         }
         set leaf(value) {
-            if (!(Plant.ERAMBIENT.test(value))) throw new InvalidValueException("Leaf", value);
+            if (!(InternPlant.ERAMBIENT.test(value))) throw new InvalidValueException("Leaf", value);
             this.#leaf = value;
         }
         set flower(value) {
-            if (!(Plant.ERAMBIENT.test(value))) throw new InvalidValueException("Flower", value);
+            if (!(InternPlant.ERAMBIENT.test(value))) throw new InvalidValueException("Flower", value);
             this.#flower = value;
         }
         set color(value) {
@@ -172,15 +182,15 @@
             return super.toString() + " " + this.#ambient + " " + this.#leaf + " " + this.#flower + " " + this.#color;
         }
     }
-    Object.defineProperty(Plant.prototype, "ambient", { enumerable: true });
-    Object.defineProperty(Plant.prototype, "leaf", { enumerable: true });
-    Object.defineProperty(Plant.prototype, "flower", { enumerable: true });
-    Object.defineProperty(Plant.prototype, "color", { enumerable: true });
+    Object.defineProperty(InternPlant.prototype, "ambient", { enumerable: true });
+    Object.defineProperty(InternPlant.prototype, "leaf", { enumerable: true });
+    Object.defineProperty(InternPlant.prototype, "flower", { enumerable: true });
+    Object.defineProperty(InternPlant.prototype, "color", { enumerable: true });
 
 
-    class Manga extends Product {
+    class InternManga extends InternProduct {
         //Atributos static
-        static TAXES = Product.TAXES;
+        static TAXES = InternProduct.TAXES;
 
         //Atributos privados
         #author;
@@ -192,7 +202,7 @@
         constructor(serial, name, price, author = "unknown", publisher = "unknown", volumes = 1) {
             if (!new.target) throw new InvalidAccessConstructorException();
             abstractCreateLock = false;
-            super(serial, name, price, Manga.TAXES);
+            super(serial, name, price, InternManga.TAXES);
 
             //Validación de argumentos
             if (!author) throw new EmptyValueException("Author");
@@ -237,12 +247,12 @@
             return super.toString() + " " + this.#author + " " + this.publisher + " " + this.#volumes;
         }
     }
-    Object.defineProperty(Manga.prototype, "author", { enumerable: true });
-    Object.defineProperty(Manga.prototype, "publisher", { enumerable: true });
-    Object.defineProperty(Manga.prototype, "volume", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "author", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "publisher", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "volume", { enumerable: true });
 
 
-    class Furniture extends Product {
+    class InternFurniture extends InternProduct {
         //Atributos static
         static TAXES = 12;
         static ERTYPE = /^(Wood|Iron|Cristal|Plastic)$/i;
@@ -254,9 +264,9 @@
         constructor(serial, name, price, type, width, height, deep) {
             if (!new.target) throw new InvalidAccessConstructorException();
             abstractCreateLock = false;
-            super(serial, name, price, Manga.TAXES);
+            super(serial, name, price, InternManga.TAXES);
 
-            if (!(Furniture.ERTYPE.test(type))) throw new InvalidValueException("Type", type);
+            if (!(InternFurniture.ERTYPE.test(type))) throw new InvalidValueException("Type", type);
             let c_width = Number.parseInt(width);
             if (!c_width || c_width <= 0) throw new InvalidValueException("Width", width);
             let c_height = Number.parseInt(height);
@@ -283,7 +293,7 @@
             return this.#deep;
         }
         set type(value) {
-            if (!(Furniture.ERTYPE.test(value))) throw new InvalidValueException("Type", value);
+            if (!(InternFurniture.ERTYPE.test(value))) throw new InvalidValueException("Type", value);
             this.#type = value;
         }
         set width(value) {
@@ -306,14 +316,16 @@
             return super.toString() + " " + this.#type + " " + this.#width + " " + this.#height + " " + this.#deep;
         }
     }
-    Object.defineProperty(Manga.prototype, "type", { enumerable: true });
-    Object.defineProperty(Manga.prototype, "width", { enumerable: true });
-    Object.defineProperty(Manga.prototype, "height", { enumerable: true });
-    Object.defineProperty(Manga.prototype, "deep", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "type", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "width", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "height", { enumerable: true });
+    Object.defineProperty(InternManga.prototype, "deep", { enumerable: true });
 
-    window.Product = Product;
-    window.Plant = Plant;
-    window.Manga = Manga;
-    window.Furniture = Furniture;
+    Product = InternProduct;
+    Plant = InternPlant;
+    Manga = InternManga;
+    Furniture = InternFurniture;
 
 })();
+
+export { Product, Plant, Manga, Furniture };

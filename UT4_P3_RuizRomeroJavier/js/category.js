@@ -1,5 +1,7 @@
 "use strict";
 
+import { InvalidAccessConstructorException, InvalidValueException, EmptyValueException } from "./exceptions.js";
+
 class Category {
     #title;
     #description;
@@ -33,3 +35,5 @@ class Category {
 
 Object.defineProperty(Category.prototype, "title", { enumerable: true });
 Object.defineProperty(Category.prototype, "description", { enumerable: true });
+
+export { Category }
