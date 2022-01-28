@@ -44,7 +44,7 @@ class Coord {
      * @returns String
      */
     toString() {
-        return this.#latitude + ", " + this.#longitude;
+        return `Coordenadas: ${this.#latitude}, ${this.#longitude}`;
     }
 
     /**

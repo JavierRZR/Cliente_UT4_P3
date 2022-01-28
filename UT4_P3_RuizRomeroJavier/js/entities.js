@@ -98,7 +98,7 @@ let Product, Plant, Manga, Furniture;
 
         //METODOS PÚBLICOS
         toString() {
-            return this.#serial + ": " + this.#name + " " + this.#price + " " + this.#tax + " " + this.#description + " " + this.#images;
+            return `Serial:${this.#serial}  Name:${this.#name}  Price:${this.#price} Tax:${this.#tax}% Description:${this.#description} Images:${this.#images} ` ;
         }
 
         priceWithoutTaxes() {
@@ -116,9 +116,9 @@ let Product, Plant, Manga, Furniture;
     class InternPlant extends InternProduct {
 
         //Atributos static
-        static ERAMBIENT = /^(humidity|dryland|hot|cold)$/i
-        static ERLEAF = /^(perenne|caduca)$/i;
-        static ERFLOWER = /^(spring|summer|autumm|winter|none)$/i;
+        static ERAMBIENT = /^(humidity|dryland|hot|cold)$/i         //Confort ambient
+        static ERLEAF = /^(perennial|fallen)$/i;                      //Type of leaf
+        static ERFLOWER = /^(spring|summer|autumm|winter|none)$/i;  //Flower Season
         static TAXES = 4;
 
         //Atributos privados
@@ -165,11 +165,11 @@ let Product, Plant, Manga, Furniture;
             this.#ambient = value;
         }
         set leaf(value) {
-            if (!(InternPlant.ERAMBIENT.test(value))) throw new InvalidValueException("Leaf", value);
+            if (!(InternPlant.ERLEAF.test(value))) throw new InvalidValueException("Leaf", value);
             this.#leaf = value;
         }
         set flower(value) {
-            if (!(InternPlant.ERAMBIENT.test(value))) throw new InvalidValueException("Flower", value);
+            if (!(InternPlant.ERFLOWER.test(value))) throw new InvalidValueException("Flower", value);
             this.#flower = value;
         }
         set color(value) {
@@ -179,7 +179,7 @@ let Product, Plant, Manga, Furniture;
 
         //Métodos públicos
         toString() {
-            return super.toString() + " " + this.#ambient + " " + this.#leaf + " " + this.#flower + " " + this.#color;
+            return `${super.toString()} Ambient:${this.#ambient}  Leaf:${this.#leaf}  Flower${this.#flower} Color:${this.#color}`;
         }
     }
     Object.defineProperty(InternPlant.prototype, "ambient", { enumerable: true });
@@ -237,14 +237,14 @@ let Product, Plant, Manga, Furniture;
             this.#publisher = value;
         }
         set volumes(value) {
-            let s_vol = Number.parseInt(volumes);
+            let s_vol = Number.parseInt(value);
             if (!s_vol || s_vol <= 0) throw new InvalidValueException("Volumes", volumes);
             this.#volumes = value;
         }
 
         //Métodos públicos
         toString() {
-            return super.toString() + " " + this.#author + " " + this.publisher + " " + this.#volumes;
+            return `${super.toString()} Author:${this.#author}  Publisher:${this.#publisher}  Volumes${this.#volumes}`;
         }
     }
     Object.defineProperty(InternManga.prototype, "author", { enumerable: true });
@@ -297,23 +297,23 @@ let Product, Plant, Manga, Furniture;
             this.#type = value;
         }
         set width(value) {
-            s_value = Number.parseInt(value);
+            let s_value = Number.parseInt(value);
             if (!s_value || s_value <= 0) throw new InvalidValueException("Width", value);
             this.#width = value;
         }
         set height(value) {
-            s_value = Number.parseInt(value);
+            let s_value = Number.parseInt(value);
             if (!s_value || s_value <= 0) throw new InvalidValueException("Height", value);
             this.#height = value;
         }
         set deep(value) {
-            s_value = Number.parseInt(value);
+            let s_value = Number.parseInt(value);
             if (!s_value || s_value <= 0) throw new InvalidValueException("Deep", value);
             this.#deep = value;
         }
 
         toString() {
-            return super.toString() + " " + this.#type + " " + this.#width + " " + this.#height + " " + this.#deep;
+            return`${super.toString()} Type:${this.#type}  Width:${this.#width}cm  Hight${this.#height}cm Deep:${this.#deep}cm`;
         }
     }
     Object.defineProperty(InternManga.prototype, "type", { enumerable: true });

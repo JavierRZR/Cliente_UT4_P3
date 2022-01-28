@@ -73,7 +73,7 @@ class Store {
 
     // Métodos públicos
     toString() {
-        return this.#cif + ": " + this.#name + " " + this.#address + " " + this.#phone + " " + this.#coords.toString();
+        return `Cif:${this.#cif} Name:${this.#name}  Address:${this.#address} Phone:${this.#phone}  ${this.#coords.toString()}`;
     }
 }
 

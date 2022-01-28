@@ -6,12 +6,12 @@ class Category {
     #title;
     #description;
 
-    constructor(title = "") {
+    constructor(title = "",description="") {
         if (!(new.target)) throw new InvalidAccessConstructorException();
         if (!title) throw new EmptyValueException("Title");
-
+        
         this.#title = title.toUpperCase();
-        this.#description = "";
+        this.#description = description;
     }
 
     get title() {
@@ -28,7 +28,7 @@ class Category {
     }
 
     toString() {
-        return this.#title + ": " + this.#description;
+        return `Title:${this.#title}  Description:${this.#description}`;
     }
 
 }

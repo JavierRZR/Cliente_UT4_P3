@@ -1,11 +1,13 @@
 "use strict";
 
-class NoNameStoreHouseException extends BaseException {
-    constructor(fileName, lineNumber) {
-        super(`Error: The class can not be instantiated without a name.`, fileName, lineNumber);
-        this.name = "NoNameStoreHouseException";
-    }
-}
+import {
+    BaseException,
+    AbstractClassException,
+    InvalidAccessConstructorException,
+    InvalidValueException,
+    EmptyValueException,
+    WrongObjectTypeException
+} from "./exceptions.js";
 
 class AlreadyExistingCategoryException extends BaseException {
     constructor(category, fileName, lineNumber) {
@@ -36,7 +38,7 @@ let StoreHouse = (function () {
 
         class StoreHouse {
             //Atributos privados
-            #stores = new Map(); //array con los productos del carrito
+            #stores = new Map();
             #categories = new Map();
             #name;
             /**
@@ -100,3 +102,10 @@ let StoreHouse = (function () {
         }
     };
 })();
+
+export {
+    StoreHouse,
+    AlreadyExistingCategoryException,
+    CannotBeDeletedException,
+    NotFoundException
+};
