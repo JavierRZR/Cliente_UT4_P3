@@ -176,9 +176,8 @@ function testCoord() {
     } catch (error) {
         //InvalidValueException: Error: The parameter Longitude has an invalid value. (Longitude: -999999)
         console.log(error.toString());
-    } console.log("--------")
+    }
     c.changeLocation("+90.76, +12");
-    console.log("--------")
     try {
         c.changeLocation(new Coord("+12.2", "-10"));
     } catch (error) {
@@ -235,11 +234,35 @@ function testCategory() {
 }
 
 
-testExamples();
+function testStoreHouse() {
+    let a = StoreHouse.getInstance("UT4_P3");
+
+    a.addCategory(new Category("Decoration", "Decoration articles"));
+    a.addCategory(new Category("plants", "Plants description"));
+    let c = new Category("Lecture");
+    a.addCategory(c);
+    let m = new Manga("0001", "Chainsawman", 8, "Tatsuki Fujimoto", "Norma Editorial", 13);
+    let m2 = new Manga("0002", "One Piece", 6, "Eichiro Oda", "Norma Editorial", 103);
+
+    let s = new Store("CR", "o98765432", new Coord("+90", "-12"));
+    a.addStore(s);
+    a.addProduct(m, new Category("Decoration"), c);
+    a.addProduct(m2);
+
+    a.addProductInShop(m,s,50);
+
+
+    console.log(a);
+}
+
+
+
+
+// testExamples();
 // testPlant();
 // testManga();
 // testFurniture();
 // testCoord();
 // testStore();
-testCategory();
-
+// testCategory();
+testStoreHouse();
