@@ -255,7 +255,7 @@ let Product, Plant, Manga, Furniture;
     class InternFurniture extends InternProduct {
         //Atributos static
         static TAXES = 12;
-        static ERTYPE = /^(Wood|Iron|Cristal|Plastic)$/i;
+        static ERTYPE = /^(Wood|Iron|Cristal|Plastic|Cloth)$/i;
         #type;
         #width;
         #height;
