@@ -74,11 +74,11 @@ let Product, Plant, Manga, Furniture;
         }
         set description(value) {
             if (!value) throw EmptyValueException("Name");
-            this.#name = value;
+            this.#description = value;
         }
         set tax(value) {
             if (!value) throw EmptyValueException("Name");
-            this.#name = value;
+            this.#tax = value;
         }
         set price(value) {
             price = Number.parseFloat(value);

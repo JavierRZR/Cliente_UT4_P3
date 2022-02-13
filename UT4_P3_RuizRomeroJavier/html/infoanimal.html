@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShelterDaw</title>
 
-    <!-- <link rel="stylesheet" href="./css/reset.css"> -->
+    <!-- <link rel="stylesheet" href="../css/reset.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex me-5" href="./index.html">
+            <a class="navbar-brand d-flex me-5" href="../index.html">
                 <i class="fas fa-paw display-5"></i>
                 <span class=" ms-2 align-self-center">ShelterDaw</span>
             </a>
@@ -27,16 +27,16 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" translate>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" translate="yes">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./html/animals.html">Animales</a>
+                        <a class="nav-link" href="./animals.html">Animales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./html/storehouse.html">Almacén</a>
+                        <a class="nav-link" href="#">Tienda</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -57,88 +57,56 @@
                 </div>
                 <form class="d-flex">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                        Inicia sesión
+                        Inicia Sesión
                     </button>
                 </form>
             </div>
         </div>
     </nav>
 
-    <main class="p-5 d-flex flex-column">
-        <section id="info" class="d-flex flex-row justify-content-evenly">
-            <div id="banner-first" class="p-5 text-white d-flex flex-column justify-content-center">
-                <a href="./html/animals.html" class="">
-                    <h1 translate>ADOPTA UN ALMA</h1>
-                    <p class="mt-4 h6" translate>
-                        Todos los peludos merecen una vida mejor,<br>
-                        una segunda oportunidad.<br>
-                        Ellos te lo devuelven con todo su amor
-                    </p>
-                </a>
-            </div>
+    <main class="p-5 pt-3 col">
+        <nav id="breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="./animals.html">Animales</a></li>
+                <li class="breadcrumb-item active" aria-current="page"></li>
+            </ol>
+        </nav>
 
-            <div id="banner-second" class="">
-                <a href="./html/storehouse.html" class="">
-                    <div class="p-4 bg-warning text-dark mb-4">
-                        <h1 translate>Almacén</h1>
-                        <p translate>Visita nuestra Almacén de alimentación y complementos.</p>
+        <section id="infAnimal" class="container row">
+            <div class="col p-5 border-end">
+                <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
                     </div>
-                </a>
-                <a href="#">
-                    <div class="p-4 bg-info text-dark mb-4">
-                        <h1 translate>SOBRE NOSOTROS</h1>
-                        <p translate>Informate y contacta con nosotros.</p>
+                    <div id="infAnimalCarousel" class="carousel-inner">
                     </div>
-                </a>
-                <a href="#">
-                    <div class="p-4 bg-success text-white">
-                        <h1 translate>PREGUNTAS FRECUENTES</h1>
-                        <p translate>¿Tienes preguntas?, accede a nuestro banco de respuestas.</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <section id="services" class="container mt-5 p-5 d-flex flex-column">
-            <h1 class="text-center" translate>NUESTROS SERVICIOS</h1>
-            <div class="servicesDescription justify-content-center">
-                <p class="text-muted" translate>
-
-                    Estamos en constante investigación sobre como mejorar la vida de nuestros amigos peludos,
-                    darles la posibilidad de encontrar una familia cariñosa con la que compartir su amor.
-                    <br><br>
-                    Además podemos proveer a nuestros clientes con productos para cuidar cualquier aspecto de los
-                    animales.
-                    Visita nuestra Almacén para encontrar cualquier cosa que necesites!.
-                </p>
-            </div>
-            <div class="d-flex justify-content-around mt-3">
-                <div class="d-flex flex-column align-items-center">
-                    <i class="fas fa-paw display-3 mb-2"></i>
-                    <p class="fw-bold">Adopta</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                    <i class="fas fa-hand-holding-heart display-3 mb-2"></i>
-                    <p class="fw-bold">Dona</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                    <i class="fas fa-store-alt display-3 mb-2"></i>
-                    <p class="fw-bold">Almacén</p>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
-        </section>
+            <div id="infAnimalDesc" class="col-8 p-5 ">
 
-        <section class="mt-5">
-            <figure class="text-center">
-                <img src="./img/webresources/bannerpubli.png" alt="publicidad" width="600px">
-                <figcaption class="text-muted">PUBLICIDAD</figcaption>
-            </figure>
+            </div>
         </section>
     </main>
 
     <footer class="p-5 d-flex flex-wrap bg-dark text-white">
         <div class="mb-5 pb-3 d-flex flex-row justify-content-between border-bottom" style="width: 100%;">
-            <a class="navbar-brand d-flex me-5" href="#">
+            <a class="navbar-brand d-flex me-5" href="../index.html">
                 <i class="fas fa-paw display-5"></i>
                 <span class=" ms-2 align-self-center">ShelterDaw</span>
             </a>
@@ -158,14 +126,14 @@
         <div class="ms-5 d-flex flex-column">
             <h5 class="ms-4">Páginas</h5>
             <ul>
-                <a href="#">
+                <a href="../index.html">
                     <li>Inicio</li>
                 </a>
                 <a href="./html/animals.html">
                     <li>Animales</li>
                 </a>
-                <a href="./html/storehouse.html">
-                    <li>Almacén</li>
+                <a href="#">
+                    <li>Tienda</li>
                 </a>
             </ul>
         </div>
@@ -190,8 +158,8 @@
     </script>
     <script src="https://kit.fontawesome.com/b9811f7b49.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./js/interfaz/main.js"></script>
-    <script src="./js/cliente/test.js" type="module"></script>
+    <script src="../js/interfaz/dataBase.js"></script>
+    <script src="../js/interfaz/infoanimal.js"></script>
 </body>
 
 </html>

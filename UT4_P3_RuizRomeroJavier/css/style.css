@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Libre+Baskerville&family=Poppins&display=swap');
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: rgb(231, 231, 231);
+}
+
+body {
+    background-color: rgb(248, 255, 249);
+}
+
+#banner-first {
+    width: 60%;
+    background-image: url("../img/webresources/cat-banner.jpg");
+    background-color: rgb(13, 80, 60);
+    background-position: left;
+    /* background-size: cover; */
+}
+
+#banner-second {
+    width: 35%;
+}
+
+.servicesDescription {
+    padding: 2em 20%;
+}
+
+footer>div {
+    width: 30%;
+}
+
+footer a {
+    text-decoration: underline;
+}
+
+footer a:hover {
+    color: rgb(154, 255, 157);
+}
+
+li {
+    list-style-type: none;
+}
+
+#breadcrumb a,
+#infAnimalDesc a {
+    color: blue;
+    text-decoration: underline;
+}
+
+
+#animals a {
+    color: blue;
+}
+
+#sh-stores .card:hover,
+#content .card:hover {
+    transform: scale(1.1);
+    background-color: rgb(206, 251, 243);
+    cursor: pointer;
+}
+
+tbody tr:hover {
+    background-color: rgb(206, 251, 243);
+    cursor: pointer;
+}
+
+tbody td, th{
+    font-size: 0.8em;
+}
+
+#sh-content img {
+    height: 150px;
+}
+
+#showProdHelp {
+    font-size: 0.7em;
+}

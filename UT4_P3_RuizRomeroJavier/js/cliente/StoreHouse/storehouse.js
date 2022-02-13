@@ -7,10 +7,10 @@ import {
     InvalidValueException,
     EmptyValueException,
     WrongObjectTypeException
-} from "./exceptions.js";
-import { Store } from "./store.js";
-import { Category } from "./category.js";
-import { Product, Plant, Manga, Furniture } from "./entities.js";
+} from "../exceptions.js";
+import { Store } from "../store.js";
+import { Category } from "../category.js";
+import { Product, Plant, Manga, Furniture } from "../entities.js";
 
 class AlreadyExistingCategoryException extends BaseException {
     constructor(category, fileName, lineNumber) {
@@ -69,7 +69,6 @@ let StoreHouse = (function () {
             }
 
             get stores() {
-                let nextIndex = 0;
                 let array = [];
                 this.#stores.forEach(elem => array.push(elem.store));
                 return {
@@ -79,6 +78,10 @@ let StoreHouse = (function () {
                         }
                     }
                 }
+            }
+
+            getProduct(product){
+                return this.#stores.get("DEFAULT").products.get(product);
             }
 
             /**
@@ -251,6 +254,7 @@ let StoreHouse = (function () {
                                 if (type == product.product.__proto__.constructor.name.toUpperCase()) {
                                     let obj = {
                                         product: product.product,
+                                        categories: product.categories,
                                         stock: product.stock
                                     }
                                     _provisional.has((product).product.serial) ?
@@ -260,6 +264,7 @@ let StoreHouse = (function () {
                             } else {
                                 let obj = {
                                     product: product.product,
+                                    categories: product.categories,
                                     stock: product.stock
                                 }
                                 _provisional.has(product.product.serial) ?
@@ -296,6 +301,7 @@ let StoreHouse = (function () {
                         if (type == prod.product.__proto__.constructor.name.toUpperCase()) {
                             let obj = {
                                 product: prod.product,
+                                categories: prod.categories,
                                 stock: prod.stock
                             }
                             _array.push(obj);
@@ -303,12 +309,12 @@ let StoreHouse = (function () {
                     } else {
                         let obj = {
                             product: prod.product,
+                            categories: prod.categories,
                             stock: prod.stock
                         }
                         _array.push(obj);
                     }
                 });
-                let nextIndex = 0;
                 return {
                     *[Symbol.iterator]() {
                         for (let product of _array) {
@@ -345,8 +351,9 @@ let StoreHouse = (function () {
 })();
 
 export {
-    StoreHouse,
     AlreadyExistingCategoryException,
     CannotBeDeletedException,
     NotFoundException
 };
+
+export default StoreHouse;
