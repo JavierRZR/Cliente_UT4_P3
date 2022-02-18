@@ -79,7 +79,8 @@ tbody tr:hover {
     cursor: pointer;
 }
 
-tbody td, th{
+tbody td,
+th {
     font-size: 0.8em;
 }
 
@@ -89,4 +90,23 @@ tbody td, th{
 
 #showProdHelp {
     font-size: 0.7em;
+}
+
+#product img{
+    height: auto;
+    width: auto;
+    max-height: 25em;
+    max-width: 25em;
+}
+
+.--prodManga{
+    background-color: rgb(232, 243, 253);
+}
+
+.--prodPlant{
+    background-color: rgb(237, 255, 231);
+}
+
+.--prodFurniture{
+    background-color: rgb(255, 227, 243);
 }

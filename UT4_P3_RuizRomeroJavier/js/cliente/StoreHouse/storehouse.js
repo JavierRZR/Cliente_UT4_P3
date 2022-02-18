@@ -69,8 +69,50 @@ let StoreHouse = (function () {
             }
 
             get stores() {
+                let arr = [];
+                this.#stores.forEach(elem => arr.push(elem.store));
+                return {
+                    *[Symbol.iterator]() {
+                        for (let store of arr) {
+                            yield store;
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Devuelve un iterador con todos los productos registrados en la tienda.
+             */
+            get products() {
+                let arr = []
+                this.#stores.get("DEFAULT").products.forEach(elem => arr.push(elem))
+                return {
+                    *[Symbol.iterator]() {
+
+                        for (let product of arr) {
+                            yield product;
+                        }
+                    }
+                }
+
+            }
+
+            get defaultStore() {
+                return this.#stores.get("DEFAULT").store;
+            }
+
+            /**
+             * Devuelve todos los tipos de productos introducidos.
+             * @returns Array
+             */
+            productTypes() {
                 let array = [];
-                this.#stores.forEach(elem => array.push(elem.store));
+                for (const i of this.products) {
+                    array.push(i.product.__proto__.constructor.name.split("Intern")[1]);
+                }
+                array = (function () {
+                    return [...new Set(array)];
+                })();
                 return {
                     *[Symbol.iterator]() {
                         for (let product of array) {
@@ -80,7 +122,12 @@ let StoreHouse = (function () {
                 }
             }
 
-            getProduct(product){
+            /**
+             * Devuelve un producto dado su código.
+             * @param {*} product String
+             * @returns Product
+             */
+            getProduct(product) {
                 return this.#stores.get("DEFAULT").products.get(product);
             }
 
@@ -275,7 +322,6 @@ let StoreHouse = (function () {
                     })
                 })
                 let _array = Array.from(_provisional.values());
-                let nextIndex = 0;
                 return {
                     *[Symbol.iterator]() {
                         for (let product of _array) {
@@ -323,6 +369,38 @@ let StoreHouse = (function () {
                     }
                 }
             }
+
+            getDefaultStoreProducts(type = "") {
+                let _array = [];
+                if (type) { type = "INTERN" + type.toUpperCase(); }
+                this.#stores.get("DEFAULT").products.forEach(prod => {
+                    if (type != "") {
+                        if (type == prod.product.__proto__.constructor.name.toUpperCase()) {
+                            let obj = {
+                                product: prod.product,
+                                categories: prod.categories,
+                                stock: prod.stock
+                            }
+                            _array.push(obj);
+                        }
+                    } else {
+                        let obj = {
+                            product: prod.product,
+                            categories: prod.categories,
+                            stock: prod.stock
+                        }
+                        _array.push(obj);
+                    }
+                });
+                return {
+                    *[Symbol.iterator]() {
+                        for (let product of _array) {
+                            yield product;
+                        }
+                    }
+                }
+            }
+
 
 
             *[Symbol.iterator]() {
