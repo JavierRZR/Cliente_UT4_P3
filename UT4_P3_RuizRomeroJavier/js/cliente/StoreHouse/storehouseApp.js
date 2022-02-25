@@ -3,10 +3,8 @@ import StoreHouseController from "./storehouseController.js";
 import StoreHouseView from "./storehouseView.js";
 
 
+const StoreHouseApp = new StoreHouseController(
+    StoreHouse.getInstance(), new StoreHouseView()
+);
 
-
-$(function () {
-    const StoreHouseApp = new StoreHouseController(
-        StoreHouse.getInstance(), new StoreHouseView()
-    );
-});
+export default StoreHouseApp;

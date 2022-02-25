@@ -1,0 +1,2 @@
+Para la práctica de cliente hay que abrir index y desde el menú acceder a la página de "ALMACEN".
+El filtro por categorias y tipo solo lo hace una vez, a partir de ahi intenta filtrar con los productos que quedan en vez de recargarlos con lo necesario, está mal, obviamente.

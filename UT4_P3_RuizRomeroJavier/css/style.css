@@ -57,7 +57,8 @@ li {
 }
 
 #breadcrumb a,
-#infAnimalDesc a {
+#infAnimalDesc a,
+#mapaweb a{
     color: blue;
     text-decoration: underline;
 }

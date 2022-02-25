@@ -1,7 +1,15 @@
+import { Product } from "../entities.js";
 
 
 
 class StoreHouseView {
+
+    #executeHandler(handler, handlerArguments, scrollElement, data, url, event) {
+        handler(...handlerArguments);
+        $(scrollElement).get(0).scrollIntoView();
+        history.pushState(data, null, url);
+        event.preventDefault();
+    }
 
     constructor() {
         this.menu_store = $("#menu-store");
@@ -9,41 +17,65 @@ class StoreHouseView {
         this.menu_type = $("#menu-type");
         this.stores = $("#sh-stores");
         this.content = $("#sh-content");
+        this.windows = new Map();
     }
 
     bindInit(handler) {
         $("#initNav").click(event => {
-            handler();
+            this.#executeHandler(handler, [], 'body', { action: 'init' }, '#', event);
         });
         $("#initFooter").click(event => {
-            handler();
+            this.#executeHandler(handler, [], 'body', { action: 'init' }, '#', event);
         });
     }
 
     bindDisplayStoreProducts(handlerStore, handlerCat, handlerType) {
-        $(this.stores.children()[1]).children().click(function () {
-            handlerStore(this.dataset.store, this.dataset.storename);
+        $(this.stores.children()[1]).children().click((event) => {
+            let store = $(event.target).closest($(".card")).data("store");
+            let storename = $(event.target).closest($(".card")).data("storename")
+            this.#executeHandler(handlerStore, [store, storename], 'table', { action: 'storeFilter', store: store, storename: storename }, '#content', event);
         });
-        this.menu_store.children().find("a").click(function () {
-            handlerStore(this.dataset.store);
+        this.menu_store.children().find("a").click((event) => {
+            let store = $(event.target).closest($("a")).data("store");
+            this.#executeHandler(handlerStore, [store], 'table', { action: 'storeFilter', store: store }, '#content', event);
         });
-        this.menu_cat.children().find("a").click(function () {
-            handlerCat(this.dataset.category);
+        this.menu_cat.children().find("a").click((event) => {
+            let category = $(event.target).closest($("a")).data("category");
+            this.#executeHandler(handlerCat, [category], 'table', { action: 'categoryFilter', category: category }, '#content', event);
         });
-        this.menu_type.children().find("a").click(function () {
-            handlerType(this.dataset.prodtype);
+        this.menu_type.children().find("a").click((event) => {
+            let type = $(event.target).closest($("a")).data("prodtype");
+            this.#executeHandler(handlerType, [type], 'table', { action: 'typeFilter', type: type }, '#content', event);
         });
     }
 
     bindDisplayProductInfo(handle) {
-        this.content.find("tbody").children().click(function () {
-            handle(this.dataset.serial, this.dataset.type);
-        })
+        this.content.find("tbody").children().click((event) => {
+            let serial = $(event.target).parent().data("serial").toString();
+            let type = $(event.target).parent().data("type");
+            this.#executeHandler(handle, [serial, type], '#product', { action: 'displayProductInfo', serial: serial, type: type }, '#content', event);
+        });
+    }
+
+    bindNewWindowProduct(handle) {
+        let serial = $("#product").data("serial").toString();
+        let type = $("#product").data("type");
+        $("#newwindow").click(() => {
+            if (!(this.windows.get(serial))) {
+                this.windows.set(serial, window.open("product.html", serial, "width=800, height=600, top=250, left=250, titlebar=yes, toolbar=no, menubar=no, location=no"));
+                this.windows.get(serial).addEventListener('DOMContentLoaded', () => {
+                    handle(serial, type);
+                });
+            } else {
+                this.windows.get(serial).focus();
+            }
+        });
     }
 
     showMenu(stores, categories, type) {
         this.menu_store.empty();
         this.menu_cat.empty();
+        this.menu_type.empty();
         for (const it of stores) {
             if (it.name != "DEFAULT") {
                 this.menu_store.append(`
@@ -133,6 +165,7 @@ class StoreHouseView {
     }
 
     showProductsFilteredByCategory(products, category) {
+        $("#product").remove();
         let arrProd = $("#products-table").find("tbody").children();
         if (arrProd.length <= 0 || (!arrProd)) {
             this.showProducts(products);
@@ -145,6 +178,7 @@ class StoreHouseView {
     }
 
     showProductsFilteredByType(products, type) {
+        $("#product").remove();
         let arrProd = $("#products-table").find("tbody").children();
         if (arrProd.length <= 0 || (!arrProd)) {
             this.showProducts(products);
@@ -158,7 +192,32 @@ class StoreHouseView {
 
     showProductInfo(product, type) {
         $("#product").remove();
-        this.content.append(this.#typeInterface[type](product));
+        this.content.append(this.#typeInterface[type](product, type));
+
+    }
+
+    showNewWindowProduct(product, type, msg) {
+        let botoncerrar = $(`<button id="closewindow" class="btn btn-danger" onClick="window.close()">Cerrar</button>`);
+        let window = $(this.windows.get(product.product.serial).document);
+        window.find("header").append(`
+            <h1>Producto:</h1><h5>${product.product.name}</h5>
+        `);
+        window.find("main").append(this.#typeInterface[type](product, type));
+        window.find("#newwindow").remove();
+        window.find("#btnbuy").parent().prepend(botoncerrar);
+        let cerrartodas = $(`<button id="closewindows" class="btn btn-danger btn-lg">Cerrar Todas las pestañas</button>`)
+
+        if (!($("#closewindows")[0])) {
+            this.content.append(cerrartodas);
+            cerrartodas.click(event => {
+                this.windows.forEach(elem => {
+                    elem.close();
+                    $("#product").remove();
+                    cerrartodas.remove();
+                })
+            })
+        }
+
     }
 
     #typeInterface = {
@@ -166,9 +225,9 @@ class StoreHouseView {
         Manga: this.#mangaInterface,
         Furniture: this.#furnitureInterface
     }
-    #mangaInterface(product) {
+    #mangaInterface(product, type) {
         return $(`
-        <div id="product" class="d-flex mt-5">
+        <div id="product" class="d-flex mt-5" data-serial="${product.product.serial}" data-type="${type}">
         <div class="p-5 border-end col d-flex justify-content-center align-items-center">
             <img src="${product.product.images[0]}" alt="${product.product.name}">
         </div>
@@ -186,16 +245,17 @@ class StoreHouseView {
             </div>
             
             <p class="mb-5 border-top border-dark border-3 pt-3">${product.product.description}</p>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary">Comprar</button>
+            <div class="d-flex justify-content-between">
+                <button id="newwindow" class="btn btn-info">Abrir ventana</button>
+                <button id="btnbuy" class="btn btn-primary">Comprar</button>
             </div>
         </div>
     </div>
         `)
     }
-    #furnitureInterface(product) {
+    #furnitureInterface(product, type) {
         return $(`
-        <div id="product" class="d-flex mt-5">
+        <div id="product" class="d-flex mt-5" data-serial="${product.product.serial}" data-type="${type}">
         <div class="p-5 border-end col d-flex justify-content-center align-items-center">
             <img src="${product.product.images[0]}" alt="${product.product.name}">
         </div>
@@ -208,16 +268,17 @@ class StoreHouseView {
             </div>
             <p>Medidas: <span class="text-muted">${product.product.width}cm  x ${product.product.height}cm  x ${product.product.deep}cm</span></p>
             <p class="mb-5 border-top border-dark border-3 pt-3">${product.product.description}</p>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary">Comprar</button>
+            <div class="d-flex justify-content-between">
+                <button id="newwindow" class="btn btn-info">Abrir ventana</button>
+                <button id="btnbuy" class="btn btn-primary">Comprar</button>
             </div>
         </div>
     </div>
         `)
     }
-    #plantInterface(product) {
+    #plantInterface(product, type) {
         return $(`
-        <div id="product" class="d-flex mt-5 ">
+        <div id="product" class="d-flex mt-5" data-serial="${product.product.serial}" data-type="${type}">
         <div class="p-5 border-end col d-flex justify-content-center align-items-center">
             <img src="${product.product.images[0]}" alt="${product.product.name}">
         </div>
@@ -236,8 +297,9 @@ class StoreHouseView {
             </div>
             
             <p class="mb-5 border-top border-dark border-3 pt-3">${product.product.description}</p>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary">Comprar</button>
+            <div class="d-flex justify-content-between">
+                <button id="newwindow" class="btn btn-info">Abrir ventana</button>
+                <button id="btnbuy" class="btn btn-primary">Comprar</button>
             </div>
         </div>
     </div>

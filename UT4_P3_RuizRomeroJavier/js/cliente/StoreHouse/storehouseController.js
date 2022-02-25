@@ -76,14 +76,14 @@ class StoreHouseController {
         store.addProduct(p1, c1, c3); store.addProduct(p2, c1, c3); store.addProduct(p3, c1, c3);
         store.addProduct(f1, c3); store.addProduct(f2, c3); store.addProduct(f3, c3);
         store.addProductInStore(m1, s1, 6); store.addProductInStore(m2, s1, 2); store.addProductInStore(m5, s1, 7);
-        store.addProductInStore(p2, s1, 12); store.addProductInStore(p1, s1, 2); store.addProductInStore(p3, s2, 87);
+        store.addProductInStore(p2, s1, 12); store.addProductInStore(p1, s1, 2); store.addProductInStore(p3, s1, 87);
         store.addProductInStore(f2, s1, 9); store.addProductInStore(f3, s1, 1);
         store.addProductInStore(m2, s2, 9); store.addProductInStore(m3, s2, 12); store.addProductInStore(m4, s2, 2);
-        store.addProductInStore(p1, s2, 10); store.addProductInStore(p3, s2, 12);
+        // store.addProductInStore(p1, s2, 10); store.addProductInStore(p3, s2, 12);
         store.addProductInStore(f3, s2, 20);
         store.addProductInStore(m1, s3, 9); store.addProductInStore(m2, s3, 12); store.addProductInStore(m3, s3, 2); store.addProductInStore(m4, s3, 2);
         store.addProductInStore(p1, s3, 10); store.addProductInStore(p3, s3, 12);
-        store.addProductInStore(f3, s3, 20);
+        // store.addProductInStore(f3, s3, 20);
 
     }
 
@@ -116,7 +116,12 @@ class StoreHouseController {
     }
 
     handleDisplayStoreProducts = (store, name) => {
+        this.#viewStoreH.showMenu(this.#modelStoreH.stores, this.#modelStoreH.getStoreCategories(new Store("0", store)), this.#modelStoreH.getStoreTypes(new Store("0", store)));
         this.#viewStoreH.showProducts(this.#modelStoreH.getStoreProducts(new Store("0", store)), name);
+        this.#viewStoreH.bindDisplayStoreProducts(
+            this.handleDisplayStoreProducts,
+            this.handleDisplayCategoryProducts,
+            this.handleDisplayTypeProducts);
         this.#viewStoreH.bindDisplayProductInfo(this.handleDisplayProductInfo);
     }
     handleDisplayCategoryProducts = (category) => {
@@ -129,6 +134,16 @@ class StoreHouseController {
 
     handleDisplayProductInfo = (product, type) => {
         this.#viewStoreH.showProductInfo(this.#modelStoreH.getProduct(product), type);
+        this.#viewStoreH.bindNewWindowProduct(this.handleDisplayNewWindowProduct);
+    }
+
+    handleDisplayNewWindowProduct = (serial, type) => {
+        try {
+            let product = this.#modelStoreH.getProduct(serial.toString());
+            this.#viewStoreH.showNewWindowProduct(product, type);
+        } catch (error) {
+            this.#viewStoreH.showNewWindowProduct(null, null, "NO existe el producto");
+        }
     }
 }
 

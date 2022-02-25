@@ -88,7 +88,6 @@ let StoreHouse = (function () {
                 this.#stores.get("DEFAULT").products.forEach(elem => arr.push(elem))
                 return {
                     *[Symbol.iterator]() {
-
                         for (let product of arr) {
                             yield product;
                         }
@@ -392,6 +391,51 @@ let StoreHouse = (function () {
                         _array.push(obj);
                     }
                 });
+                return {
+                    *[Symbol.iterator]() {
+                        for (let product of _array) {
+                            yield product;
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Devuelve el total de categorías a las que pertenecen los productos de una tienda por parámetro.
+             * @param {*} store Store
+             */
+            getStoreCategories(store) {
+                if (!(store instanceof Store)) throw new WrongObjectTypeException("Store");
+                if (!(this.#stores.has(store.cif))) throw new NotFoundException("Store", store.cif);
+                let _array = [];
+                for (const it of this.#stores.get(store.cif).products.values()) {
+                    for (const i of it.categories) {
+                        if (_array.findIndex((elem) => elem == i) == -1) _array.push(i);
+                    }
+                }
+                let _cat = [];
+                for (const it of _array) {
+                    _cat.push(new Category(it));
+                }
+                return {
+                    *[Symbol.iterator]() {
+                        for (let category of _cat) {
+                            yield category;
+                        }
+                    }
+                }
+            }
+            getStoreTypes(store){
+                // prod.product.__proto__.constructor.name.toUpperCase()
+                if (!(store instanceof Store)) throw new WrongObjectTypeException("Store");
+                if (!(this.#stores.has(store.cif))) throw new NotFoundException("Store", store.cif);
+                let _array = [];
+                for (const i of this.#stores.get(store.cif).products.values()) {
+                    _array.push(i.product.__proto__.constructor.name.split("Intern")[1]);
+                }
+                _array = (function () {
+                    return [...new Set(_array)];
+                })();
                 return {
                     *[Symbol.iterator]() {
                         for (let product of _array) {
