@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelterDaw</title>
+
+    <!-- <link rel="stylesheet" href="../css/reset.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/formStyle.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex me-5" href="../index.html">
+                <i class="fas fa-paw display-5"></i>
+                <span class=" ms-2 align-self-center">ShelterDaw</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" translate="yes">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./animals.html">Animales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="initNav" class="nav-link" href="./storehouse.html">Almacen</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Información
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Sobre nosotros</a></li>
+                            <li><a class="dropdown-item" href="#">Preguntas frecuentes</a></li>
+                            <li><a class="dropdown-item" href="#">Blog</a></li>
+                            <li><a class="dropdown-item" href="#">Mapa Web</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex me-5">
+                    <button id="carrito" class="btn btn-dark" data-bs-target="#submenu" data-bs-toggle="offcanvas">
+                        <i class="fas fa-shopping-cart text-white h3"></i>
+                    </button>
+                </div>
+                <form class="d-flex">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Inicia Sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main class="p-5 pt-3 d-flex flex-column">
+        <nav id="breadcrumb" class="col-12" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Formulario de registro</li>
+            </ol>
+        </nav>
+
+        <section id="registerForm" class="p-5 bg-dark rounded">
+            <form name="registerForm" action="" method="POST" novalidate>
+                <div id="form-box" class="p-5 d-flex flex-column align-center border">
+                    <h3>Formulario de registro</h3>
+
+                    <div class="container mt-3">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#personal">Personal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#direction">Dirección</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#payment">Método de pago</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content d-grid">
+                            <div id="personal" class="container tab-pane active"><br>
+                                <div class="col mb-3 form-floating">
+                                    <input type="text" class="form-control" id="iname" placeholder="Nombre" required>
+                                    <label for="iname" class="form-label">Nombre</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir un nombre.</div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="text" class="form-control" id="isurname" placeholder="Apellidos">
+                                    <label for="isurname" class="form-label">Apellidos</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir un apellido.</div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="email" class="form-control" id="iemail" placeholder="correo@gmail.com"
+                                        required>
+                                    <label for="iemail" class="form-label">Email</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir un email válido.
+                                    </div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="text" class="form-control" id="iphone" pattern="^(6|9)[0-9]{8}$"
+                                        placeholder="Teléfono" required>
+                                    <label for="iphone" class="form-label">Teléfono</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir un teléfono válido.
+                                    </div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="password" class="form-control" id="ipass" placeholder="********"
+                                        required>
+                                    <label for="ipass" class="form-label">Contraseña</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir una contraseña.
+                                    </div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="password" class="form-control" id="ipass2" placeholder="********"
+                                        required>
+                                    <label for="ipass2" class="form-label">Confirmación</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Las contraseñas no coinciden.</div>
+                                </div>
+                            </div>
+                            <div id="direction" class="container tab-pane fade"><br>
+                                <div class="col mb-3 form-floating">
+                                    <select type="text" class="form-control" id="icountry" placeholder="País" required>
+                                        <option value=""></option>
+                                        <option value="es">España</option>
+                                        <option value="fr">Francia</option>
+                                        <option value="uk">Ukrania</option>
+                                        <option value="ru">Rusia</option>
+                                    </select>
+                                    <label for="icountry" class="form-label">País</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de elegir un país.</div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="text" class="form-control" id="icity" placeholder="Ciudad" required>
+                                    <label for="icity" class="form-label">Ciudad</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir una ciudad.</div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="col-4 mb-3 form-floating">
+                                        <select type="text" class="form-control" id="itype" placeholder="Tipo de vía"
+                                            required>
+                                            <option value=""></option>
+                                            <option value="st">C/</option>
+                                            <option value="av">Avenida</option>
+                                            <option value="pl">Plaza</option>
+                                        </select>
+                                        <label for="itype" class="form-label">Tipo de vía</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: Has de elegir una vía.</div>
+                                    </div>
+                                    <div class="col-8 mb-3 form-floating">
+                                        <input type="text" class="form-control" id="itypename"
+                                            placeholder="Nombre de la vía" required>
+                                        <label for="itypename" class="form-label">Nombre de la vía</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: Has de introducir un nombre de la
+                                            vía.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col mb-3 form-floating">
+                                    <input type="number" class="form-control" id="icp" placeholder="Código Postal"
+                                        required>
+                                    <label for="icp" class="form-label">Código Postal</label>
+                                    <div class="form-text --valid d-none ">Correcto.</div>
+                                    <div class="form-text --invalid d-none">Error: Has de introducir un código postal.
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="payment" class="container tab-pane fade"><br>
+                                <div id="subpayment" class="col mb-3 input-group mb-5">
+                                    <div class="form-check me-5">
+                                        <input class="form-check-input" type="radio" name="rpaiment" id="rpaypal"
+                                            value="paypal" checked>
+                                        <label class="form-check-label" for="rpaypal">Paypal</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="rpaiment" id="rtarjeta"
+                                            value="tarjeta">
+                                        <label class="form-check-label" for="rtarjeta">Tarjeta de crédito</label>
+                                    </div>
+                                </div>
+                                <div id="paypal" class="">
+                                    <h5 class="fw-bold">Paypal</h5>
+                                    <div class="col mb-3 form-floating">
+                                        <input type="mail" class="form-control" id="ipaypalemail"
+                                            placeholder="correo@gmail.com">
+                                        <label for="ipaypalemail" class="form-label">Paypal Email</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: Has de introducir el correo de
+                                            Paypal.</div>
+                                    </div>
+                                </div>
+
+                                <div id="tarjeta" class="d-none">
+                                    <h5 class="fw-bold">VISA / MASTERCARD</h5>
+                                    <div class="col mb-3 form-floating">
+                                        <select type="text" class="form-control" id="icard" placeholder="Tipo">
+                                            <option value=""></option>
+                                            <option value="es">VISA</option>
+                                            <option value="fr">MASTERCARD</option>
+                                        </select>
+                                        <label for="icard" class="form-label">Tipo</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: Has de elegir un modo de pago.
+                                        </div>
+                                    </div>
+                                    <div class="col mb-3 form-floating">
+                                        <input type="text" class="form-control" id="itarjetanum" pattern="^[0-9]{16}$"
+                                            placeholder="Número de Tarjeta">
+                                        <label for="itarjetanum" class="form-label">Número de tarjeta</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: Has de introducir el número de
+                                            tarjeta, todo seguido y sin espacios.</div>
+                                    </div>
+                                    <h5 class="">Fecha de caducidad</h5>
+                                    <div class="col mb-3 form-floating">
+                                        <input type="month" class="form-control" id="iexpiration" min="2022-03"
+                                            placeholder="01/2022">
+                                        <label for="iexpiration" class="form-label">01/2022</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: la tarjeta está caducada.</div>
+                                    </div>
+                                    <div class="col mb-3 form-floating">
+                                        <input type="number" class="form-control" id="itarjetacode" pattern="^[0-9]{3}$"
+                                            placeholder="Código de seguridad">
+                                        <label for="itarjetacode" class="form-label">Código de seguridad</label>
+                                        <div class="form-text --valid d-none ">Correcto.</div>
+                                        <div class="form-text --invalid d-none">Error: Introduce un número de 3 dígitos.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button registrar -->
+                        <div class="d-flex flex-row justify-content-end mt-5">
+                            <button id="btnregistrar" type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- Button trigger modal -->
+            <button id="btnmodalregister" style="visibility: hidden;" type="button" class="" data-bs-toggle="modal"
+                data-bs-target="#modalRegister">
+                Register
+            </button>
+        </section>
+    </main>
+
+    <footer class="p-5 d-flex flex-wrap bg-dark text-white">
+        <div class="mb-5 pb-3 d-flex flex-row justify-content-between border-bottom" style="width: 100%;">
+            <a class="navbar-brand d-flex me-5" href="../index.html">
+                <i class="fas fa-paw display-5"></i>
+                <span class=" ms-2 align-self-center">ShelterDaw</span>
+            </a>
+            <div class="text-white">
+                <a href="#"><i class="fab fa-facebook-f h2 me-2"></i></a>
+                <a href="#"><i class="fab fa-twitter h2 me-2"></i></a>
+                <a href="#"><i class="fab fa-youtube h2 me-2"></i></a>
+            </div>
+        </div>
+        <div class="">
+            <p>
+                Paseo Universidad, 1, 13005 Ciudad Real, Cdad. Real<br>
+                926 23 25 30<br>
+                13001327.ies@edu.jccm.es
+            </p>
+        </div>
+        <div class="ms-5 d-flex flex-column">
+            <h5 class="ms-4">Páginas</h5>
+            <ul>
+                <a href="../index.html">
+                    <li>Inicio</li>
+                </a>
+                <a href="./animals.html">
+                    <li>Animales</li>
+                </a>
+                <a id="initFooter" href="#">
+                    <li>Almacén</li>
+                </a>
+            </ul>
+        </div>
+        <div class=" d-flex flex-column">
+            <h5 class="ms-4">Información</h5>
+            <ul>
+                <a href="#">
+                    <li>Sobre nosotros</li>
+                </a>
+                <a href="#">
+                    <li>Preguntas frecuentes</li>
+                </a>
+                <a href="#">
+                    <li>Blog</li>
+                </a>
+                <a href="#">
+                    <li>Mapa Web</li>
+                </a>
+            </ul>
+        </div>
+    </footer>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalRegister" tabindex="-1" aria-labelledby="modalRegister" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formulario de registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="display-5 text-success">REGISTRADO, formulario relleno correctamente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="https://kit.fontawesome.com/b9811f7b49.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/interfaz/registervalidation.js"></script>
+</body>
+
+</html>

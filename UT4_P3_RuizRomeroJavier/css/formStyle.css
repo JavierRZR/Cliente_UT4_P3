@@ -1,0 +1,29 @@
+#registerForm {
+    /* background-color: rgb(104, 49, 185); */
+}
+
+#registerForm label {
+    /* margin-left: 1em; */
+}
+
+#form-box {
+    background-color: white;
+    max-width: 600px;
+    margin: auto;
+}
+
+.--valid {
+    color: green;
+}
+
+.--invalid {
+    color: red;
+}
+
+input.--valid {
+    border: 3px solid rgb(0, 211, 0);
+}
+
+input.--invalid {
+    border: 3px solid rgb(255, 0, 0);
+}
