@@ -30,24 +30,24 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent" translate>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        <a class="nav-link active translate" aria-current="page" href="#">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./html/animals.html">Animales</a>
+                        <a class="nav-link translate" href="./html/animals.html">Animales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./html/storehouse.html">Almacén</a>
+                        <a class="nav-link translate" href="./html/storehouse.html">Almacén</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle translate" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Información
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Sobre nosotros</a></li>
-                            <li><a class="dropdown-item" href="#">Preguntas frecuentes</a></li>
-                            <li><a class="dropdown-item" href="#">Blog</a></li>
-                            <li><a class="dropdown-item" href="./html/mapaweb.html">Mapa Web</a></li>
+                            <li><a class="dropdown-item translate" href="#">Sobre nosotros</a></li>
+                            <li><a class="dropdown-item translate" href="#">Preguntas frecuentes</a></li>
+                            <li><a class="dropdown-item " href="#">Blog</a></li>
+                            <li><a class="dropdown-item translate" href="./html/mapaweb.html">Mapa Web</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -66,11 +66,11 @@
     </nav>
 
     <main class="p-5 d-flex flex-column">
-        <section id="info" class="d-flex flex-row justify-content-evenly">
+        <section id="info" class="">
             <div id="banner-first" class="p-5 text-white d-flex flex-column justify-content-center">
                 <a href="./html/animals.html" class="">
-                    <h1 translate>ADOPTA UN ALMA</h1>
-                    <p class="mt-4 h6" translate>
+                    <h1 class="translate">ADOPTA UN ALMA</h1>
+                    <p class="mt-4 h6 translate">
                         Todos los peludos merecen una vida mejor,<br>
                         una segunda oportunidad.<br>
                         Ellos te lo devuelven con todo su amor
@@ -81,29 +81,29 @@
             <div id="banner-second" class="">
                 <a href="./html/storehouse.html" class="">
                     <div class="p-4 bg-warning text-dark mb-4">
-                        <h1 translate>ALMACÉN</h1>
-                        <p translate>Visita nuestro Almacén de alimentación y complementos.</p>
+                        <h1 class="translate">ALMACÉN</h1>
+                        <p class="translate">Visita nuestro Almacén de alimentación y complementos.</p>
                     </div>
                 </a>
                 <a href="#">
                     <div class="p-4 bg-info text-dark mb-4">
-                        <h1 translate>SOBRE NOSOTROS</h1>
-                        <p translate>Informate y contacta con nosotros.</p>
+                        <h1 class="translate">SOBRE NOSOTROS</h1>
+                        <p class="translate">Informate y contacta con nosotros.</p>
                     </div>
                 </a>
                 <a href="#">
                     <div class="p-4 bg-success text-white">
-                        <h1 translate>PREGUNTAS FRECUENTES</h1>
-                        <p translate>¿Tienes preguntas?, accede a nuestro banco de respuestas.</p>
+                        <h1 class="translate">PREGUNTAS FRECUENTES</h1>
+                        <p class="translate">¿Tienes preguntas?, accede a nuestro banco de respuestas.</p>
                     </div>
                 </a>
             </div>
         </section>
 
-        <section id="services" class="container mt-5 p-5 d-flex flex-column">
-            <h1 class="text-center" translate>NUESTROS SERVICIOS</h1>
+        <section id="services" class="container mt-5 d-flex flex-column">
+            <h1 class="text-center translate" >NUESTROS SERVICIOS</h1>
             <div class="servicesDescription justify-content-center">
-                <p class="text-muted" translate>
+                <p class="text-muted translate" >
 
                     Estamos en constante investigación sobre como mejorar la vida de nuestros amigos peludos,
                     darles la posibilidad de encontrar una familia cariñosa con la que compartir su amor.
@@ -116,20 +116,20 @@
             <div class="d-flex justify-content-around mt-3">
                 <div class="d-flex flex-column align-items-center">
                     <i class="fas fa-paw display-3 mb-2"></i>
-                    <p class="fw-bold">Adopta</p>
+                    <p class="fw-bold translate">Adopta</p>
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <i class="fas fa-hand-holding-heart display-3 mb-2"></i>
-                    <p class="fw-bold">Dona</p>
+                    <p class="fw-bold translate">Dona</p>
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <i class="fas fa-store-alt display-3 mb-2"></i>
-                    <p class="fw-bold">Almacén</p>
+                    <p class="fw-bold translate">Almacén</p>
                 </div>
             </div>
         </section>
 
-        <section class="mt-5">
+        <section id="publi" class="mt-5">
             <figure class="text-center">
                 <img src="./img/webresources/bannerpubli.png" alt="publicidad" width="600px">
                 <figcaption class="text-muted">PUBLICIDAD</figcaption>
@@ -144,6 +144,11 @@
                 <span class=" ms-2 align-self-center">ShelterDaw</span>
             </a>
             <div class="text-white">
+                <span class=" form-switch me-5">
+                    <label class="form-check-label me-3" for="flexSwitchCheckDefault"><img src="./img/webresources/es.ico" alt=""></label>
+                    <input class="form-check-input" type="checkbox" id="langSwitch">
+                    <label class="form-check-label ms-3" for="flexSwitchCheckDefault"><img src="./img/webresources/en.ico" alt=""></label>
+                </span>
                 <a href="#"><i class="fab fa-facebook-f h2 me-2"></i></a>
                 <a href="#"><i class="fab fa-twitter h2 me-2"></i></a>
                 <a href="#"><i class="fab fa-youtube h2 me-2"></i></a>
@@ -157,33 +162,33 @@
             </p>
         </div>
         <div class="ms-5 d-flex flex-column">
-            <h5 class="ms-4">Páginas</h5>
+            <h5 class="ms-4 translate">Páginas</h5>
             <ul>
                 <a href="#">
-                    <li>Inicio</li>
+                    <li class="translate">Inicio</li>
                 </a>
                 <a href="./html/animals.html">
-                    <li>Animales</li>
+                    <li class="translate">Animales</li>
                 </a>
                 <a href="./html/storehouse.html">
-                    <li>Almacén</li>
+                    <li class="translate">Almacén</li>
                 </a>
             </ul>
         </div>
         <div class=" d-flex flex-column">
-            <h5 class="ms-4">Información</h5>
+            <h5 class="ms-4 translate">Información</h5>
             <ul>
                 <a href="#">
-                    <li>Sobre nosotros</li>
+                    <li class="translate">Sobre nosotros</li>
                 </a>
                 <a href="#">
-                    <li>Preguntas frecuentes</li>
+                    <li class="translate">Preguntas frecuentes</li>
                 </a>
                 <a href="#">
                     <li>Blog</li>
                 </a>
                 <a href="./html/mapaweb.html">
-                    <li>Mapa Web</li>
+                    <li class="translate">Mapa Web</li>
                 </a>
             </ul>
         </div>
@@ -213,7 +218,8 @@
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
                             <label class="form-check-label" for="exampleCheck1">Recordarme</label>
                         </div>
-                        <button type="submit" class="btn btn-primary" onclick="alert('Jaja, no puedes iniciar sesión, solo `registrarte`.')">LOGIN</button>
+                        <button type="submit" class="btn btn-primary"
+                            onclick="alert('Jaja, no puedes iniciar sesión, solo `registrarte`.')">LOGIN</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -229,7 +235,9 @@
     </script>
     <script src="https://kit.fontawesome.com/b9811f7b49.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
     <script src="./js/interfaz/main.js"></script>
+    <script src="./js/interfaz/lang.js"></script>
     <!-- <script src="./js/cliente/test.js" type="module"></script> -->
 </body>
 

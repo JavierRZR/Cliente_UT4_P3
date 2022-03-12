@@ -12,7 +12,7 @@ $(function () {
 
     function createCard(animal) {
         let postElement = $(`
-        <div class="card ms-5 mb-5" style="width: 13rem;">
+        <div class="card ms-5 mb-5">
             <img src="../img/animals/${animal.img[0]}" class="card-img-top" alt="${animal.name}">
             <div class="card-body">
                 <h5 class="card-title">${animal.name}</h5>

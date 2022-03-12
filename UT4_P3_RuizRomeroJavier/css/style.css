@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Libre+Baskerville&family=Poppins&display=swap');
 
+
+* {
+    font-size: 2vh;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
 h1,
 h2,
 h3,
 h4 {
+    font-size: 5vh;
     font-family: 'Fjalla One', sans-serif;
-}
-
-* {
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -59,7 +62,7 @@ li {
 
 #breadcrumb a,
 #infAnimalDesc a,
-#mapaweb a{
+#mapaweb a {
     color: blue;
     text-decoration: underline;
 }
@@ -67,6 +70,11 @@ li {
 
 #animals a {
     color: blue;
+}
+
+#infanimal{
+    display: grid;
+    grid-template-columns: auto;
 }
 
 #sh-stores .card:hover,
@@ -94,21 +102,75 @@ th {
     font-size: 0.7em;
 }
 
-#product img{
+.card {
+    width: 13rem;
+}
+
+#product img {
     height: auto;
     width: auto;
     max-height: 25em;
     max-width: 25em;
 }
 
-.--prodManga{
+#services{
+    padding: 3em;
+}
+
+.--prodManga {
     background-color: rgb(232, 243, 253);
 }
 
-.--prodPlant{
+.--prodPlant {
     background-color: rgb(237, 255, 231);
 }
 
-.--prodFurniture{
+.--prodFurniture {
     background-color: rgb(255, 227, 243);
+}
+
+
+#info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 1vw;
+}
+
+@media screen and (max-width:800px) {
+    #publi img {
+        width: 100%;
+    }
+
+    #info {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    #banner-first {
+        margin-bottom: 1em;
+    }
+
+    #info div {
+        width: 100%;
+    }
+
+    #card {
+        width: 20rem;
+    }
+
+    #infanimal{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .card {
+        width: 100%;
+    }
+
+    #services{
+        padding: 0em;
+    }
 }
