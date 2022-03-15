@@ -34,8 +34,10 @@ $(function () {
 
 
         if (!validated) {
+            $("#formErrorMsg").addClass("d-none");
             $(errorInput).focus();
         } else {
+            $("#formErrorMsg").removeClass("d-none");
             document.getElementById("btnmodalregister").click();
             form.reset();
             for (const it of inputs) {

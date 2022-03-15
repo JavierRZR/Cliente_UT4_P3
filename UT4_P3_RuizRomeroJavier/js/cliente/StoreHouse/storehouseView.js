@@ -102,7 +102,7 @@ class StoreHouseView {
 
     showStores(stores) {
         this.stores.empty();
-        let _container = $(`<div class="mb-5 d-flex justify-content-center"></div>`);
+        let _container = $(`<div id="divtiendas" class="mb-5 d-flex justify-content-center"></div>`);
         this.stores.append(`<div><h3>Tiendas</h3></div>`)
         for (const it of stores) {
 
@@ -111,7 +111,7 @@ class StoreHouseView {
             <div id="tarjeta" data-store="${it.cif}" data-storeName="${it.name}" class="card me-5" style="width: 13rem;">
                 <img src="https://via.placeholder.com/250x100.jpg/212529/FFFFFF?text=${it.name}" class="card-img-top" alt="${it.name} Store">
                 <div class="card-body text-center">
-                    <p class="card-text text-muted fs-6 fw-ligth">${it.address}<br> ${it.phone}</p>
+                    <p class="card-text text-muted fw-ligth">${it.address}<br> ${it.phone}</p>
                 </div>
             </div>
             `)
@@ -227,7 +227,7 @@ class StoreHouseView {
     }
     #mangaInterface(product, type) {
         return $(`
-        <div id="product" class="d-flex mt-5" data-serial="${product.product.serial}" data-type="${type}">
+        <div id="product" class="mt-5" data-serial="${product.product.serial}" data-type="${type}">
         <div class="p-5 border-end col d-flex justify-content-center align-items-center">
             <img src="${product.product.images[0]}" alt="${product.product.name}">
         </div>
@@ -255,7 +255,7 @@ class StoreHouseView {
     }
     #furnitureInterface(product, type) {
         return $(`
-        <div id="product" class="d-flex mt-5" data-serial="${product.product.serial}" data-type="${type}">
+        <div id="product" class="mt-5" data-serial="${product.product.serial}" data-type="${type}">
         <div class="p-5 border-end col d-flex justify-content-center align-items-center">
             <img src="${product.product.images[0]}" alt="${product.product.name}">
         </div>
@@ -278,7 +278,7 @@ class StoreHouseView {
     }
     #plantInterface(product, type) {
         return $(`
-        <div id="product" class="d-flex mt-5" data-serial="${product.product.serial}" data-type="${type}">
+        <div id="product" class="mt-5" data-serial="${product.product.serial}" data-type="${type}">
         <div class="p-5 border-end col d-flex justify-content-center align-items-center">
             <img src="${product.product.images[0]}" alt="${product.product.name}">
         </div>

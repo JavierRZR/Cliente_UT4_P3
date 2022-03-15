@@ -80,13 +80,12 @@ $(function () {
 
 
   let translations = $(".translate");
-  console.log(translations);
-
   let langCont = $("#langSwitch");
 
 
   langCont.change(function () {
     (langCont[0].checked) ? toEnglish() : toSpanish();
+    window.scroll(0, 0);
   });
 
 
