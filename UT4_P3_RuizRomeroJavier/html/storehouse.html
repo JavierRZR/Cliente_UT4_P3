@@ -57,8 +57,11 @@
                     </button>
                 </div>
                 <form class="d-flex">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <button type="button" class="btn btn-primary" id="bLogin">
                         Inicia Sesión
+                    </button>
+                    <button type="button" class="btn btn-warning" id="bLogout">
+                        Cerrar Sesión
                     </button>
                 </form>
             </div>
@@ -106,6 +109,18 @@
                         </ul>
                     </li>
                 </ul>
+            </div>
+
+            <div id="sh-login" class="mt-5">
+
+            </div>
+
+            <div id="sh-admin" class="mt-5">
+
+            </div>
+
+            <div id="sh-form" class="mt-5 d-flex justify-content-center">
+
             </div>
 
             <div id="sh-stores" class="mt-5 d-flex flex-column">
@@ -178,6 +193,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../js/interfaz/main.js" type="module"></script>
     <script src="../js/cliente/StoreHouse/storehouseApp.js" type="module"></script>
+    <script src="../js/cliente/form/validateForm.js" type="module"></script>
 </body>
 
 </html>

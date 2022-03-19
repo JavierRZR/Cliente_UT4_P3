@@ -87,6 +87,18 @@ class StoreHouseController {
 
     }
 
+    #users = [
+        {
+            user: "admin",
+            pass: "admin"
+        },
+        {
+            user: "pablo",
+            pass: "pablo"
+        }
+    ];
+
+
     constructor(modelSH, viewSH) {
         this.#modelStoreH = modelSH;
         this.#viewStoreH = viewSH;
@@ -98,21 +110,54 @@ class StoreHouseController {
     onLoad = () => {
         this.#loadData();
         this.#viewStoreH.bindInit(this.handleInit);
-        this.#viewStoreH.showMenu(this.#modelStoreH.stores, this.#modelStoreH.categories, this.#modelStoreH.productTypes());
-        this.#viewStoreH.showStores(this.#modelStoreH.stores);
-        this.#viewStoreH.bindDisplayStoreProducts(
-            this.handleDisplayStoreProducts,
-            this.handleDisplayCategoryProducts,
-            this.handleDisplayTypeProducts);
+        this.handleDisplayWholeInterface();
 
+        // this.#viewStoreH.showAdminPanel();
+        // this.#viewStoreH.bindAdminMenu(
+        //     this.handleNewCategoryForm,
+        //     this.handleNewStoreForm,
+        //     this.handleRemCategoryForm,
+        //     this.handleRemStoreForm,
+        //     this.handleNewProdForm,
+        //     this.handleAddProdIntoStoreForm,
+        //     this.handleRemProdForm,
+        //     this.handleRemProdFromStoreForm);
+
+        this.#viewStoreH.bindLoginModalForm(this.hShowLogin, this.handleLogut);
+
+
+        if (this.getCookie("User")) {
+            this.#viewStoreH.showLoginInfo(this.getCookie, new Date());
+            this.#viewStoreH.showAdminPanel();
+            this.#viewStoreH.bindAdminMenu(
+                this.handleNewCategoryForm,
+                this.handleNewStoreForm,
+                this.handleRemCategoryForm,
+                this.handleRemStoreForm,
+                this.handleNewProdForm,
+                this.handleAddProdIntoStoreForm,
+                this.handleRemProdForm,
+                this.handleRemProdFromStoreForm);
+        }
     }
 
     onInit = () => {
         this.#viewStoreH.content.empty();
+        this.#viewStoreH.form.empty();
     }
 
     handleInit = () => {
         this.onInit();
+    }
+
+    handleDisplayWholeInterface = () => {
+        this.#viewStoreH.showMenu(this.#modelStoreH.stores, this.#modelStoreH.categories, this.#modelStoreH.productTypes());
+        this.#viewStoreH.showStores(this.#modelStoreH.stores);
+        this.#viewStoreH.content.empty();
+        this.#viewStoreH.bindDisplayStoreProducts(
+            this.handleDisplayStoreProducts,
+            this.handleDisplayCategoryProducts,
+            this.handleDisplayTypeProducts);
     }
 
     handleDisplayStoreProducts = (store, name) => {
@@ -145,6 +190,255 @@ class StoreHouseController {
             this.#viewStoreH.showNewWindowProduct(null, null, "NO existe el producto");
         }
     }
+
+
+
+    //!Formularios
+    handleNewCategoryForm = () => {
+        this.#viewStoreH.showNewCategoryForm();
+        this.#viewStoreH.bindNewCategoryForm(this.handleCreateCategory);
+    }
+
+    handleCreateCategory = (title, desc) => {
+        let cat = new Category(title, desc);
+        let done, error;
+        try {
+            this.#modelStoreH.addCategory(cat);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showNewCategoryModal(done, "Categoría", cat.title, "category", "creado correctamente", "ya existe", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleNewStoreForm = () => {
+        this.#viewStoreH.showNewStoreForm();
+        this.#viewStoreH.bindNewStoreForm(this.handleCreateStore);
+    }
+
+    handleCreateStore = (name, cif, address, coord, phone) => {
+        let coordenada = new Coord();
+        let done, error;
+        if (coord != "") coordenada.changeLocation(coord);
+        let store = new Store(name, cif, coordenada);
+        if (address != "") store.address = address;
+        if (phone != "") store.phone = phone;
+        try {
+            this.#modelStoreH.addStore(store);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception
+        }
+        this.#viewStoreH.showNewModal(done, "Tienda", store.name, "store", "creado correctamente", "ya existe", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleRemCategoryForm = () => {
+        this.#viewStoreH.showRemoveCategoryForm(this.#modelStoreH.categories);
+        this.#viewStoreH.bindRemCategoryForm(this.handleRemoveCategory);
+    }
+    handleRemoveCategory = (cat) => {
+        let category = new Category(cat);
+        let done, error;
+        try {
+            this.#modelStoreH.removeCategory(category);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showRemoveModal(done, "Category", cat, "category", "eliminado correctamente", "no existe el producto.", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleRemStoreForm = () => {
+        this.#viewStoreH.showRemoveStoreForm(this.#modelStoreH.stores);
+        this.#viewStoreH.bindRemStoreForm(this.handleRemoveStore);
+    }
+    handleRemoveStore = (str) => {
+        let store = new Store("test", str);
+        let done, error;
+        try {
+            this.#modelStoreH.removeStore(store);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showRemoveModal(done, "Store", str, "store", "eliminado correctamente", "no existe el producto.", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleNewProdForm = () => {
+        this.#viewStoreH.showNewProdForm(this.#modelStoreH.categories);
+        this.#viewStoreH.bindNewPlantForm(this.handleCreatePlant);
+        this.#viewStoreH.bindNewMangaForm(this.handleCreateManga);
+        this.#viewStoreH.bindNewFurnitureForm(this.handleCreateFurniture);
+    }
+
+    handleCreatePlant = (prod) => {
+        let done, error;
+        try {
+            let plant = new Plant(prod.code, prod.name, prod.price, prod.ambient, prod.leaf, prod.flower, prod.color);
+            plant.description = prod.desc;
+            plant.addImage = prod.image;
+            let categories = [];
+            for (const it of prod.categories) {
+                categories.push(new Category(it));
+            }
+            this.#modelStoreH.addProduct(plant, ...categories);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showNewModal(done, "Planta", prod.name, "plant", "creada correctamente", "ya existe", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleCreateManga = (prod) => {
+        let done, error;
+        try {
+            let manga = new Manga(prod.code, prod.name, prod.price, prod.author, prod.publisher);
+            manga.description = prod.desc;
+            manga.addImage = prod.image;
+            let categories = [];
+            for (const it of prod.categories) {
+                categories.push(new Category(it));
+            }
+            this.#modelStoreH.addProduct(manga, ...categories);
+
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showNewModal(done, "Manga", prod.name, "manga", "creado correctamente", "ya existe", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleCreateFurniture = (prod) => {
+        let done, error;
+        try {
+            let furniture = new Furniture(prod.code, prod.name, prod.price, prod.type, prod.width, prod.height, prod.deep);
+            furniture.description = prod.desc;
+            furniture.addImage = prod.image;
+            let categories = [];
+            for (const it of prod.categories) {
+                categories.push(new Category(it));
+            }
+            this.#modelStoreH.addProduct(furniture, ...categories);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showNewModal(done, "Mueble", prod.name, "furniture", "creado correctamente", "ya existe", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleAddProdIntoStoreForm = () => {
+        this.#viewStoreH.showAddProdIntoStoreForm(this.#modelStoreH.products, this.#modelStoreH.stores);
+        this.#viewStoreH.bindAddProdIntoStoreForm(this.handleAddProdIntoStore);
+    }
+
+    handleAddProdIntoStore = (obj) => {
+        let done, error;
+        try {
+            this.#modelStoreH.addQuantityProductInStore(this.#modelStoreH.getProduct(obj.product).product, new Store("test", obj.store), obj.units);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showNewModal(done, "Producto en tienda", obj.product, "addProductStore", `añadido correctamente en ${obj.store}`, "ha habido un error.", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleRemProdForm = () => {
+        this.#viewStoreH.showRemoveProdForm(this.#modelStoreH.products);
+        this.#viewStoreH.bindRemProdForm(this.handleRemoveProd);
+    }
+    handleRemoveProd = (prod) => {
+        let done, error;
+        let name = "Error";
+        try {
+            let product = this.#modelStoreH.getProduct(prod.product);
+            name = product.product.name;
+            this.#modelStoreH.removeProduct(product.product);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showRemoveModal(done, "Producto", name, "prod", "eliminado correctamente", "no existe el producto.", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    handleRemProdFromStoreForm = () => {
+        this.#viewStoreH.showRemoveProdFromStoreForm(this.#modelStoreH.products, this.#modelStoreH.stores);
+        this.#viewStoreH.bindRemProdFromStoreForm(this.handleRemoveProdfromStore);
+    }
+    handleRemoveProdfromStore = (prod) => {
+        let done, error;
+        let nameP = "Error";
+        try {
+            let product = this.#modelStoreH.getProduct(prod.product);
+            let store = new Store("test", prod.store);
+            nameP = product.product.name;
+            this.#modelStoreH.removeProductFromStore(product.product, store);
+            done = true;
+        } catch (exception) {
+            done = false;
+            error = exception;
+        }
+        this.#viewStoreH.showRemoveModal(done, "Producto", nameP, "prodStore", `eliminado correctamente`, "no existe el producto.", error);
+        this.handleDisplayWholeInterface();
+    }
+
+    hShowLogin = () => {
+        this.#viewStoreH.loginModal();
+        this.#viewStoreH.bindLoginValidation(this.handleLogin, [...this.#users]);
+    }
+
+    handleLogin = (user) => {
+        this.setCookie("User", user, 1000);
+        this.#viewStoreH.showLoginInfo(this.getCookie, new Date());
+        this.#viewStoreH.showAdminPanel();
+        this.#viewStoreH.bindAdminMenu(
+            this.handleNewCategoryForm,
+            this.handleNewStoreForm,
+            this.handleRemCategoryForm,
+            this.handleRemStoreForm,
+            this.handleNewProdForm,
+            this.handleAddProdIntoStoreForm,
+            this.handleRemProdForm,
+            this.handleRemProdFromStoreForm);
+
+        $("#bLogin").attr("disable", true);
+    }
+
+    handleLogut = () => {
+        this.setCookie("User", "", 0);
+        location.reload();
+    }
+
+
+    setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    getCookie(cname) {
+        let re = new RegExp('(?:(?:^|.*;\\s*)' + cname + '\\s*\\=\\s*([^;]*).*$)|^.*$');
+        return document.cookie.replace(re, "$1");
+    }
+
 }
 
 export default StoreHouseController;

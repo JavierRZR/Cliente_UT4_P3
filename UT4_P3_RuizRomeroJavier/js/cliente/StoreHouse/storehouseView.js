@@ -1,4 +1,16 @@
 import { Product } from "../entities.js";
+import {
+    newCategoryValidation,
+    newStoreValidation,
+    removeCategoryValidation,
+    removeStoreValidation,
+    newPlantValidation,
+    newMangaValidation,
+    newFurnitureValidation,
+    addIntoStoreValidation,
+    removeProdValidation,
+    removeProdFromStoreValidation
+} from '../form/validateForm.js';
 
 
 
@@ -18,6 +30,9 @@ class StoreHouseView {
         this.stores = $("#sh-stores");
         this.content = $("#sh-content");
         this.windows = new Map();
+        this.menu_admin = $("#sh-admin");
+        this.form = $("#sh-form");
+        this.login = $("#sh-login");
     }
 
     bindInit(handler) {
@@ -306,6 +321,843 @@ class StoreHouseView {
         `)
     }
 
+    showAdminPanel() {
+        this.menu_admin.empty();
+        this.menu_admin.append(`
+            <h1>Panel de administración</h1>
+            <div id="adminpanel" class="mb-5">
+            <div class="text-center border-bottom p-3">
+                <p class="h5 fw-bold">PRODUCTOS <span class="fw-normal">(Almacén)</span></p>
+                <button id="addProd" type="button" class="btn btn-lg btn-success value="addProd">Añadir</button>
+                <button id="remProd" type="button" class="btn btn-lg btn-danger value="remProd">Eliminar</button>
+            </div>
+            <div class="text-center border-bottom p-3">
+                <p class="h5 fw-bold">PRODUCTOS <span class="fw-normal">(Tiendas)</span></p>
+                <button id="addProdIntoStore" type="button" class="btn btn-lg btn-success value="addCat">Añadir</button>
+                <button id="remProdFromStore" type="button" class="btn btn-lg btn-danger value="remCat">Eliminar</button>
+            </div>
+            <div class="text-center border-bottom p-3">
+                <p class="h5 fw-bold">CATEGORÍAS</p>
+                <button id="addCat" type="button" class="btn btn-lg btn-success value="addCat">Añadir</button>
+                <button id="remCat" type="button" class="btn btn-lg btn-danger value="remCat">Eliminar</button>
+            </div>
+            <div class="text-center border-bottom p-3">
+                <p class="h5 fw-bold">TIENDAS</p>
+                <button id="addStore" type="button" class="btn btn-lg btn-success value="addStore">Añadir</button>
+                <button id="remStore" type="button" class="btn btn-lg btn-danger value="remStore">Eliminar</button>
+            </div>
+            </div>
+        `)
+    }
+
+    bindAdminMenu(hNewCategory, hNewStore, hRemCat, hRemStore, hNewProd, hAddProdIntoStore, hRemProd, hRemProdFromStore) {
+        $('#addCat').click(() => {
+            hNewCategory();
+        });
+        $('#addStore').click(() => {
+            hNewStore();
+        });
+        $('#remCat').click(() => {
+            hRemCat();
+        });
+        $('#remStore').click(() => {
+            hRemStore();
+        });
+        $('#addProd').click(() => {
+            hNewProd();
+        });
+        $('#addProdIntoStore').click(() => {
+            hAddProdIntoStore();
+        });
+        $('#remProd').click(() => {
+            hRemProd();
+        });
+        $('#remProdFromStore').click(() => {
+            hRemProdFromStore();
+        });
+
+    }
+
+    bindNewCategoryForm(handler) {
+        newCategoryValidation(handler);
+    }
+    bindNewStoreForm(handler) {
+        newStoreValidation(handler);
+    }
+    bindRemCategoryForm(handler) {
+        removeCategoryValidation(handler);
+    }
+    bindRemStoreForm(handler) {
+        removeStoreValidation(handler);
+    }
+
+    //Productos
+    bindNewPlantForm(handler) {
+        newPlantValidation(handler);
+    }
+    bindNewMangaForm(handler) {
+        newMangaValidation(handler);
+    }
+    bindNewFurnitureForm(handler) {
+        newFurnitureValidation(handler);
+    }
+    bindAddProdIntoStoreForm(handler) {
+        addIntoStoreValidation(handler);
+    }
+    bindRemProdForm(handler) {
+        removeProdValidation(handler);
+    }
+    bindRemProdFromStoreForm(handler) {
+        removeProdFromStoreValidation(handler);
+    }
+
+    //!FORMULARIOS
+    showNewCategoryForm() {
+        this.form.empty();
+        let container = $(`
+        <div class="card mb-3 form" id="new-category">
+        <form name="fNewCategory" role="form" novalidate>
+         <div class="card-header bg-dark text-white">AÑADIR CATEGORÍA</div>
+         <div class="card-body" style="background-color: aliceblue;">
+         
+                 <div class="form-floating mb-3">
+                     <input type="text" class="form-control" id="ncTitle" name="ncTitle" required>
+                     <label for="address">Nombre</label>
+                     <div class="invalidfeedback">El título es obligatorio.</div>
+                     <div class="valid-feedback">Correcto.</div>
+                 </div>
+                 <div class="form-floating mb-3">
+                     <input type="text" class="form-control" id="ncDescription" name="ncDescription">
+                     <label for="address">Descripción</label>
+                     <div class="invalid-feedback"></div>
+                     <div class="valid-feedback">Correcto.</div>
+                 </div>
+         </div>
+         <div class="card-footer d-flex justify-content-end bg-dark">
+             <button class="btn btn-primary me-3" type="submit" >Enviar</button>
+             <button class="btn btn-secondary" type="reset">Borrar</button>
+         </div>
+         </form>
+     </div>
+     `);
+        this.form.append(container);
+    }
+
+    showNewStoreForm() {
+        this.form.empty();
+        let container = $(`
+        <div class="card mb-3 form">
+        <form name="fAddStore" role="form" novalidate>
+        <div class="card-header bg-dark text-white">AÑADIR TIENDA</div>
+        <div class="card-body" style="background-color: aliceblue;">
+                <div class="row g-2 mb-3">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="name" required>
+                            <label for="name">Nombre *</label>
+                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha de introducir un nombre.</p>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="cif" required>
+                            <label for="cif">CIF *</label>
+                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduzca un CIF válido: ej: Z99999999.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="address">
+                    <label for="address">Dirección</label>
+                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">.</p>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="coord">
+                            <label for="coord">Coordenadas</label>
+                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduzca un formato de coordenadas válido.</p>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="phone">
+                            <label for="phone">Teléfono</label>
+                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduzca un formato de teléfono válido.</p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end bg-dark">
+            <button class="btn btn-primary me-3" type="submit">ENVIAR</button>
+            <button class="btn btn-secondary" type="reset">Borrar</button>
+        </div>
+        </form>
+    </div>
+        `);
+        this.form.append(container);
+    }
+
+    showRemoveCategoryForm(cat) {
+        this.form.empty();
+        let select = $(`<select class="form-select" name="rmCtitle" id="rmCtitle" required>
+                            <option value=""> </option>`);
+        for (const it of cat) {
+            if (it.title != "DEFAULT") select.append(`<option value="${it.title}" >${it.title}</option>`);
+
+        }
+        select.append(`</select>`);
+        let container = $(`
+        <div class="card mb-3 form">
+        <form name="fRemoveCategory" role="form" novalidate>
+         <div class="card-header bg-dark text-white">ELIMINAR CATEGORÍA</div>
+         <div class="card-body" style="background-color: aliceblue;">
+         
+                 <div id="aqui" class="form-floating mb-3">
+
+                    <label for="floatingSelect">Elige una categoría</label>
+                     <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+                     <div class="valid-feedback">Correcto.</div>
+                 </div>
+         </div>
+         <div class="card-footer d-flex justify-content-end bg-dark">
+             <button class="btn btn-primary me-3" type="submit" >Enviar</button>
+             <button class="btn btn-secondary" type="reset">Borrar</button>
+         </div>
+         </form>
+     </div>
+     `);
+        container.find("#aqui").prepend(select);
+        this.form.append(container);
+    }
+
+    showRemoveStoreForm(stores) {
+        this.form.empty();
+        let select = $(`<select class="form-select" name="rmSname" id="rmSname" required>
+                            <option value=""> </option>`);
+        for (const it of stores) {
+            if (it.name != "DEFAULT") select.append(`<option value="${it.cif}" >${it.name}</option>`);
+
+        }
+        select.append(`</select>`);
+        let container = $(`
+        <div class="card mb-3 form">
+        <form name="fRemoveStore" role="form" novalidate>
+         <div class="card-header bg-dark text-white">ELIMINAR TIENDA</div>
+         <div class="card-body" style="background-color: aliceblue;">
+         
+                 <div id="aqui" class="form-floating mb-3">
+
+                    <label for="floatingSelect">Elige una tienda</label>
+                     <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+                     <div class="valid-feedback">Correcto.</div>
+                 </div>
+         </div>
+         <div class="card-footer d-flex justify-content-end bg-dark">
+             <button class="btn btn-primary me-3" type="submit" >Enviar</button>
+             <button class="btn btn-secondary" type="reset">Borrar</button>
+         </div>
+         </form>
+     </div>
+     `);
+        container.find("#aqui").prepend(select);
+        this.form.append(container);
+    }
+
+    showNewProdForm(cat) {
+        this.form.empty();
+        let categories = $("<div></div>");
+        for (const it of cat) {
+            if (it.title != "DEFAULT") {
+                categories.append(`
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="${it.title}" id="${it.title}">
+                <label class="form-check-label" for="flexCheckDefault">${it.title}</label>
+            </div>
+            `)
+            }
+        }
+        let container = $(`
+        <div id="newProd" class="" style="width: auto;">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                            aria-selected="true">Planta</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Manga</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Mueble</button>
+                    </div>
+
+                    <div class="tab-content mt-3" id="nav-tabContent" class="insertAqui">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
+        <div class=" mb-3 form">
+                                <form name="fAddProdPlant" role="form" enctype="multipart/form-data" novalidate>
+                                    <div class="card-header bg-dark text-white">AÑADIR PLANTA</div>
+                                    <div class="card-body" style="background-color: aliceblue;">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="code" required>
+                                            <label for="code">Código *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha de
+                                                introducir un código.</p>
+                                        </div>
+                                        <div class="row g-2 mb-3">
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="name" required>
+                                                    <label for="name">Nombre *</label>
+                                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha
+                                                        de introducir un nombre.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="number" min="1" class="form-control" id="price"
+                                                        required>
+                                                    <label for="price">Precio *</label>
+                                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">
+                                                        Introduzca un precio válido. Ej: 35</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="desc">
+                                            <label for="desc">Descripción</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">.</p>
+                                        </div>
+                                        <div id="insertCat" class="mb-3">
+                                            <p class="fw-bold">Categorías</p>
+                                        </div>
+                                        <div class="row g-2 mb-3">
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="ambient" required>
+                                                    <label for="ambient">Ambiente *</label>
+                                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha
+                                                        de introducir un Ambiente. (humidity|dryland|hot|cold)</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="leaf" required>
+                                                    <label for="leaf">Hoja *</label>
+                                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">
+                                                        Introduzca un tipo de hoja válido. (perennial|fallen)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2 mb-3">
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="flower">
+                                                    <label for="flower">Flor </label>
+                                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha
+                                                        de introducir un tipo de Flor.
+                                                        (spring|summer|autumm|winter|none)</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="color">
+                                                    <label for="color">Color</label>
+                                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">
+                                                        Introduzca un color.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="file" class="form-control" id="image" required>
+                                            <label for="image">Imagen</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce
+                                                una imagen.</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-end bg-dark">
+                                        <button class="btn btn-primary me-3" type="submit">ENVIAR</button>
+                                        <button class="btn btn-secondary" type="reset">Borrar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class=" mb-3 form">
+                        <form name="fAddProdManga" role="form" enctype="multipart/form-data" novalidate>
+                            <div class="card-header bg-dark text-white">AÑADIR MANGA</div>
+                            <div class="card-body" style="background-color: aliceblue;">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="code" required>
+                                    <label for="code">Código *</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha de
+                                        introducir un código.</p>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="name" required>
+                                            <label for="name">Nombre *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha
+                                                de introducir un nombre.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="number" min="1" class="form-control" id="price" required>
+                                            <label for="price">Precio *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">
+                                                Introduzca un precio válido. Ej: 35</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="desc">
+                                    <label for="desc">Descripción</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">.</p>
+                                </div>
+                                <div id="insertCat" class="mb-3">
+                                    <p class="fw-bold">Categorías</p>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="author">
+                                            <label for="author">Autor</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce un
+                                                autor.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="publisher">
+                                            <label for="publisher">Publisher</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce un
+                                                publisher.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image" required>
+                                    <label for="image">Imagen</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce
+                                        una imagen.</p>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end bg-dark">
+                                <button class="btn btn-primary me-3" type="submit">ENVIAR</button>
+                                <button class="btn btn-secondary" type="reset">Borrar</button>
+                            </div>
+                        </form>
+                    </div> 
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class=" mb-3 form">
+                        <form name="fAddProdFurniture" role="form" enctype="multipart/form-data" novalidate>
+                            <div class="card-header bg-dark text-white">AÑADIR MUEBLE</div>
+                            <div class="card-body" style="background-color: aliceblue;">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="code" required>
+                                    <label for="code">Código *</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha de
+                                        introducir un código.</p>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="name" required>
+                                            <label for="name">Nombre *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Ha
+                                                de introducir un nombre.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="number" min="1" class="form-control" id="price" required>
+                                            <label for="price">Precio *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">
+                                                Introduzca un precio válido. Ej: 35</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="desc">
+                                    <label for="desc">Descripción</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">.</p>
+                                </div>
+                                <div id="insertCat" class="mb-3">
+                                    <p class="fw-bold">Categorías</p>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="type" required>
+                                    <label for="type">Material *</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduzca un tipo de
+                                        material. (Wood|Iron|Cristal|Plastic|Cloth).</p>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" min="1" required id="width">
+                                            <label for="width">Anchura *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce una
+                                                anchura mayor a 1cm.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" min="1" required id="height">
+                                            <label for="height">Altura *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce una
+                                                altura mayor a 1cm.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" min="1" required id="deep">
+                                            <label for="deep">Profuncidad *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce una
+                                                profuncidad mayor a 1cm.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="file" class="form-control" id="image" required>
+                                    <label for="image">Imagen</label>
+                                    <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce
+                                        una imagen.</p>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end bg-dark">
+                                <button class="btn btn-primary me-3" type="submit">ENVIAR</button>
+                                <button class="btn btn-secondary" type="reset">Borrar</button>
+                            </div>
+                        </form>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+        `);
+        container.find("#insertCat").append(categories);
+        this.form.append(container);
+    }
+
+    showAddProdIntoStoreForm(product, store) {
+        this.form.empty();
+        let stores = $(`<select class="form-select" name="store" id="store" required>
+                            <option value=""> </option>`);
+        for (const it of store) {
+            if (it.name != "DEFAULT") stores.append(`<option value="${it.cif}" >${it.cif}</option>`);
+
+        }
+        stores.append(`</select>`);
+
+        let products = $(`<select class="form-select" name="product" id="product" required>
+                            <option value=""> </option>`);
+        for (const it of product) {
+            products.append(`<option value="${it.product.serial}" >${it.product.name}</option>`);
+
+        }
+        products.append(`</select>`);
+        let container = $(`
+        <div class="card mb-3 form">
+        <form name="fAddProductInStore" role="form" novalidate>
+         <div class="card-header bg-dark text-white">AÑADIR PRODUCTO A UNA TIENDA</div>
+         <div class="card-body" style="background-color: aliceblue;">
+                 <div class="row g-2 mb-3">
+                 <div id="aquiProd" class="col-md form-floating mb-3">
+
+                 <label for="floatingSelect">Elige un producto</label>
+                  <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+                  <div class="valid-feedback">Correcto.</div>
+              </div>
+              <div id="aquiStore" class="col-md form-floating mb-3">
+
+              <label for="floatingSelect">Elige una tienda</label>
+               <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+               <div class="valid-feedback">Correcto.</div>
+           </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" min="1" required id="units">
+                                            <label for="units">Unidades *</label>
+                                            <p class="d-none text-danger fw-bold" style="font-size: 0.9em;">Introduce una
+                                                cantidad mayor a 1u.</p>
+                                        </div>
+                                    </div>
+                                </div>
+         </div>
+         <div class="card-footer d-flex justify-content-end bg-dark">
+             <button class="btn btn-primary me-3" type="submit" >Enviar</button>
+             <button class="btn btn-secondary" type="reset">Borrar</button>
+         </div>
+         </form>
+     </div>
+     `);
+        container.find("#aquiProd").prepend(products);
+        container.find("#aquiStore").prepend(stores);
+        this.form.append(container);
+    }
+
+    showRemoveProdForm(product) {
+        this.form.empty();
+        let products = $(`<select class="form-select" name="product" id="product" required>
+                            <option value=""> </option>`);
+        for (const it of product) {
+            products.append(`<option value="${it.product.serial}" >${it.product.name}</option>`);
+
+        }
+        products.append(`</select>`);
+        let container = $(`
+        <div class="card mb-3 form">
+        <form name="fRemoveProd" role="form" novalidate>
+         <div class="card-header bg-dark text-white">ELIMINAR PRODUCTO DEL ALMACÉN</div>
+         <div class="card-body" style="background-color: aliceblue;">
+                
+                 <div id="aquiProd" class="col-md form-floating mb-3">
+
+                  <label for="floatingSelect">Elige un producto</label>
+                  <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+                  <div class="valid-feedback">Correcto.</div>
+              </div>
+            
+                
+         </div>
+         <div class="card-footer d-flex justify-content-end bg-dark">
+             <button class="btn btn-primary me-3" type="submit" >Enviar</button>
+             <button class="btn btn-secondary" type="reset">Borrar</button>
+         </div>
+         </form>
+     </div>
+     `);
+        container.find("#aquiProd").prepend(products);
+        this.form.append(container);
+    }
+
+    showRemoveProdFromStoreForm(product, store) {
+        this.form.empty();
+        let stores = $(`<select class="form-select" name="store" id="store" required>
+                            <option value=""> </option>`);
+        for (const it of store) {
+            if (it.name != "DEFAULT") stores.append(`<option value="${it.cif}" >${it.cif}</option>`);
+
+        }
+        stores.append(`</select>`);
+
+        let products = $(`<select class="form-select" name="product" id="product" required>
+                            <option value=""> </option>`);
+        for (const it of product) {
+            products.append(`<option value="${it.product.serial}" >${it.product.name}</option>`);
+
+        }
+        products.append(`</select>`);
+        let container = $(`
+        <div class="card mb-3 form">
+        <form name="fRemoveProductFromStore" role="form" novalidate>
+         <div class="card-header bg-dark text-white">ELIMINAR PRODUCTO DE TIENDA</div>
+         <div class="card-body" style="background-color: aliceblue;">
+                 <div class="row g-2 mb-3">
+                 <div id="aquiProd" class="col-md form-floating mb-3">
+
+                 <label for="floatingSelect">Elige un producto</label>
+                  <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+                  <div class="valid-feedback">Correcto.</div>
+              </div>
+              <div id="aquiStore" class="col-md form-floating mb-3">
+
+              <label for="floatingSelect">Elige una tienda</label>
+               <div class="invalidfeedback">Es obligatorio seleccionar una opción.</div>
+               <div class="valid-feedback">Correcto.</div>
+           </div>
+         </div>
+         <div class="card-footer d-flex justify-content-end bg-dark">
+             <button class="btn btn-primary me-3" type="submit" >Enviar</button>
+             <button class="btn btn-secondary" type="reset">Borrar</button>
+         </div>
+         </form>
+     </div>
+     `);
+        container.find("#aquiProd").prepend(products);
+        container.find("#aquiStore").prepend(stores);
+        this.form.append(container);
+    }
+
+    //!MODALES
+    showRemoveModal(done, type, name, form, msg, msgerror, error) {
+        let forms = {
+            prodStore: $(document.fRemoveProductFromStore),
+            prod: $(document.fRemoveProd),
+            category: $(document.fRemoveCategory),
+            store: $(document.fRemoveStore)
+        }
+        forms[form].find('div.error').remove();
+        if (done) {
+            let modal = $(`<div class="modal fade" id="newStoreModal" tabindex
+       ="-1"
+        data-backdrop="static" data-keyboard="false" role="dialog" arialabelledby="newStoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modaltitle" id="newStoreModalLabel">${type} eliminado.</h5>
+        <button type="button" class="btn-close" datadismiss="modal" aria-label="Close">
+        <span aria-hidden="true"></span>
+        </button>
+        </div>
+        <div class="modal-body">
+        ${type} <strong>${name}</strong> ${msg}.
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary" datadismiss="modal">Aceptar</button>
+        </div>
+        </div>
+        </div>
+        </div>`);
+            $('body').append(modal);
+            let newStoreModal = $('#newStoreModal');
+            newStoreModal.modal('show');
+            newStoreModal.find('button').click(() => {
+                newStoreModal.on('hidden.bs.modal', function (event) {
+                    forms[form][0].reset();
+                    // forms[form][0].name.focus();
+                    this.remove();
+                });
+                newStoreModal.modal('hide');
+            })
+        } else {
+            forms[form].prepend(`<div class="error text-danger p3"><i class="fas fa-exclamationtriangle"></i> ${type} <strong>${name}</strong> ${msgerror}.
+       </div>`);
+        }
+    }
+
+    showNewModal(done, type, name, form, msg, msgerror, error) {
+        let forms = {
+            plant: $(document.fAddProdPlant),
+            manga: $(document.fAddProdManga),
+            furniture: $(document.fAddProdFurniture),
+            category: $(document.fNewCategory),
+            store: $(document.fAddStore),
+            addProductStore: $(document.fAddProductInStore)
+        }
+        forms[form].find('div.error').remove();
+        if (done) {
+            let modal = $(`<div class="modal fade" id="newStoreModal" tabindex
+       ="-1"
+        data-backdrop="static" data-keyboard="false" role="dialog" arialabelledby="newStoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modaltitle" id="newStoreModalLabel">${type} creado</h5>
+        <button type="button" class="btn-close" datadismiss="modal" aria-label="Close">
+        <span aria-hidden="true"></span>
+        </button>
+        </div>
+        <div class="modal-body">
+        ${type} <strong>${name}</strong> ${msg}.
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary" datadismiss="modal">Aceptar</button>
+        </div>
+        </div>
+        </div>
+        </div>`);
+            $('body').append(modal);
+            let newStoreModal = $('#newStoreModal');
+            newStoreModal.modal('show');
+            newStoreModal.find('button').click(() => {
+                newStoreModal.on('hidden.bs.modal', function (event) {
+                    forms[form][0].reset();
+                    // forms[form][0].name.focus();
+                    this.remove();
+                });
+                newStoreModal.modal('hide');
+            })
+        } else {
+            forms[form].prepend(`<div class="error text-danger p3"><i class="fas fa-exclamationtriangle"></i> ${type} <strong>${name}</strong> ${msgerror}.
+       </div>`);
+        }
+    }
+
+    bindLoginModalForm(handlerLogin, handlerLogout) {
+        $("#bLogin").click(function () {
+            handlerLogin();
+        });
+        $("#bLogout").click(function () {
+            handlerLogout();
+        });
+    }
+
+    bindLoginValidation(handler, users) {
+        let form = document.forms.loginForm;
+        $(form).attr('novalidate', true);
+        $(form).submit(function (event) {
+            let user;
+            let isValid = false;
+            for (const it of users) {
+                if (this.user.value == it.user && this.pass.value == it.pass) {
+                    isValid = true;
+                    user = it.user;
+                }
+            }
+
+            if (!isValid) {
+                $(this).find("#errorMsg").removeClass("d-none");
+            } else {
+                handler(user);
+            }
+            event.preventDefault();
+            event.stopPropagation();
+        });
+    }
+
+    loginModal() {
+        let modal = $(`<div class="modal fade" id="newStoreModal" tabindex="-1"
+         data-backdrop="static" data-keyboard="false" role="dialog" arialabelledby="newStoreModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+         <div class="modal-content bg-white">
+        <div class="modal-header">
+        <h5 class="modaltitle" id="newStoreModalLabel">FORMULARIO LOGIN</h5>
+        <button type="button" class="btn-close" datadismiss="modal" aria-label="Close">
+        <span aria-hidden="true"></span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <form name="loginForm" role="form" novalidate>
+         <div class="mb-3">
+           <label for="user" class="form-label">User</label>
+           <input type="user" class="form-control" id="user" aria-describedby="userHelp">
+         </div>
+         <div class="mb-3">
+           <label for="pass" class="form-label">Password</label>
+           <input type="password" class="form-control" id="pass">
+         </div>
+        <p id="errorMsg" class="text-danger ps-3 d-none">Error en usuario o contraseña</p>
+         <button type="submit" class="btn btn-primary">Submit</button>
+       </form>
+        </div>
+        
+       </div>
+         </div>
+         </div>`);
+        $("body").append(modal);
+        let newStoreModal = $('#newStoreModal');
+        newStoreModal.modal('show');
+        newStoreModal.find('button').click(() => {
+            newStoreModal.on('hidden.bs.modal', function (event) {
+                // this.remove();
+            });
+            // newStoreModal.modal('hide');
+        })
+    }
+
+    showLoginInfo(user, date) {
+        console.log(user("User"));
+        user = user("User");
+        this.login.empty();
+        if (user) {
+            this.login.append(`
+            <div><h1>Bienvenido ${user}: </h1> ${date}</div>
+            `)
+        }
+
+    }
 }
+
 
 export default StoreHouseView;

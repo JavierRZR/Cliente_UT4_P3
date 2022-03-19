@@ -10,7 +10,7 @@ class Coord {
     #latitude;
     #longitude;
 
-    constructor(latitude, longitude) {
+    constructor(latitude = "+0", longitude = "+0") {
         if (!(new.target)) throw new InvalidAccessConstructorException();
         if (!(Coord.ERLATITUDE.test(latitude))) throw new InvalidValueException("Latitude", latitude);
         if (!(Coord.ERLONGITUDE.test(longitude))) throw new InvalidValueException("Longitude", longitude);

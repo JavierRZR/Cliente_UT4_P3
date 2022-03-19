@@ -259,6 +259,22 @@ let StoreHouse = (function () {
             }
 
             /**
+             * Elimina un producto concreto de una tienda concreta.
+             * @param {*} prod Product
+             * @param {*} store Store
+             * @returns Integer
+             */
+            removeProductFromStore(prod, store) {
+                if (!(prod instanceof Product)) throw new WrongObjectTypeException("Product");
+                if (!(store instanceof Store)) throw new WrongObjectTypeException("Store");
+                if (!(this.#stores.has(store.cif))) throw new NotFoundException("Store", store.cif);
+                // if (!(this.#stores.get(store).products.has(prod.serial))) throw new NotFoundException("Product", prod.serial);
+
+                this.#stores.get(store.cif).products.delete(prod.serial);
+                return this.#stores.get(store.cif).products.size;
+            }
+
+            /**
              * Añade un producto a una tienda con un stock determinado o actualiza el mismo si ya existe.
              * @param {*} prod Product
              * @param {*} store Store
@@ -425,7 +441,7 @@ let StoreHouse = (function () {
                     }
                 }
             }
-            getStoreTypes(store){
+            getStoreTypes(store) {
                 // prod.product.__proto__.constructor.name.toUpperCase()
                 if (!(store instanceof Store)) throw new WrongObjectTypeException("Store");
                 if (!(this.#stores.has(store.cif))) throw new NotFoundException("Store", store.cif);

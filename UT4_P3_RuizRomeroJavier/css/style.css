@@ -119,7 +119,7 @@ th {
     font-size: 0.7em;
 }
 
-.card {
+#mainAnimals .card {
     width: 13rem;
 }
 
@@ -168,6 +168,15 @@ iframe {
     background-color: rgb(255, 227, 243);
 }
 
+#adminpanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.form {
+    width: auto;
+}
 
 #info {
     display: flex;
@@ -181,6 +190,24 @@ iframe {
     color: black;
 }
 
+#video {
+    width: 50%;
+    height: 600px;
+}
+
+
+.--valid {
+    border: rgb(93, 238, 93);
+    color: rgb(93, 238, 93);
+}
+
+.--invalid {
+    border: rgb(238, 93, 136);
+    color: rgb(238, 93, 136);
+}
+
+
+
 @media screen and (max-width:1000px) {
     #Info {
         flex-direction: column;
@@ -193,6 +220,30 @@ iframe {
     iframe {
         width: 100%;
         height: 400px;
+    }
+
+    #video {
+        width: 100%;
+        height: 600px;
+    }
+
+    .form {
+        width: 100%;
+    }
+
+
+}
+
+@media screen and (max-width:900px) {
+    #adminpanel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #adminpanel button {
+        margin-bottom: 1em;
+        align-self: center;
+        width: 50%;
     }
 }
 
@@ -263,10 +314,25 @@ iframe {
         width: 100%;
         height: 400px;
     }
+
+    #adminpanel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #adminpanel button {
+        margin-bottom: 1em;
+        align-self: center;
+        width: 50%;
+    }
+
+    .form {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width:500px) {
-    .card {
+    #mainAnimals .card {
         width: 100%;
     }
 
@@ -276,6 +342,10 @@ iframe {
 
     #sh-content {
         padding: 0em;
+    }
+
+    #tarjeta {
+        margin-bottom: 1em;
     }
 
     #infAnimalDesc {
@@ -293,5 +363,18 @@ iframe {
     iframe {
         width: 100%;
         height: 400px;
+    }
+
+    #video {
+        width: 100%;
+        height: 600px;
+    }
+
+    #adminpanel button {
+        width: 100%;
+    }
+
+    .form {
+        width: 100%;
     }
 }
