@@ -8,6 +8,7 @@ function showFeedBack(input, valid, message) {
     input.nextAll('div').removeClass('d-block');
     div.removeClass('d-none').addClass('d-block');
     input.removeClass('is-valid is-invalid').addClass(validClass);
+    (!valid) ? input.nextAll("p").removeClass("d-none") : input.nextAll("p").addClass("d-none");
     if (message) {
         div.empty();
         div.append(message);
