@@ -2,7 +2,7 @@ import { Store } from "../store.js";
 import { Coord } from "../coord.js";
 import { Category } from "../category.js";
 import { Product, Plant, Manga, Furniture } from "../entities.js";
-
+import jsonObject from "./datos.json" assert { type: "json" };
 
 class StoreHouseController {
 
@@ -86,7 +86,6 @@ class StoreHouseController {
         // store.addProductInStore(f3, s3, 20);
 
     }
-
     #users = [
         {
             user: "admin",
@@ -97,31 +96,36 @@ class StoreHouseController {
             pass: "pablo"
         }
     ];
+    #deletedData = {
+        STORES: [],
+        CATEGORIES: [],
+        PRODUCTS: []
+    }
+    #createdData = {
+        STORES: [],
+        CATEGORIES: [],
+        PRODUCTS: {
+            MANGA: [],
+            PLANT: [],
+            FURNITURE: [],
+            ADDEDTOSTORE: []
+        }
+    }
 
 
     constructor(modelSH, viewSH) {
         this.#modelStoreH = modelSH;
         this.#viewStoreH = viewSH;
-
         this.onLoad();
 
     }
 
     onLoad = () => {
-        this.#loadData();
+        // this.#loadData();
+        this.loadJsonData();
+
         this.#viewStoreH.bindInit(this.handleInit);
         this.handleDisplayWholeInterface();
-
-        // this.#viewStoreH.showAdminPanel();
-        // this.#viewStoreH.bindAdminMenu(
-        //     this.handleNewCategoryForm,
-        //     this.handleNewStoreForm,
-        //     this.handleRemCategoryForm,
-        //     this.handleRemStoreForm,
-        //     this.handleNewProdForm,
-        //     this.handleAddProdIntoStoreForm,
-        //     this.handleRemProdForm,
-        //     this.handleRemProdFromStoreForm);
 
         this.#viewStoreH.bindLoginModalForm(this.hShowLogin, this.handleLogut);
 
@@ -137,8 +141,129 @@ class StoreHouseController {
                 this.handleNewProdForm,
                 this.handleAddProdIntoStoreForm,
                 this.handleRemProdForm,
-                this.handleRemProdFromStoreForm);
+                this.handleRemProdFromStoreForm,
+                this.handleExportJSON);
         }
+    }
+
+    loadJsonData = () => {
+        //Cargar tiendas
+        for (const it of jsonObject.STORES.data) {
+            let s = new Store(it.name, it.cif, new Coord(it.coordx, it.coordy));
+            s.address = it.address;
+            s.phone = it.phone;
+            this.#modelStoreH.addStore(s);
+        }
+        //Cargar categorias
+        for (const it of jsonObject.CATEGORIES.data) {
+            this.#modelStoreH.addCategory(new Category(it.title, it.description));
+        }
+
+        //Cargar productos
+        for (const it of jsonObject.PRODUCTS.MANGA) {
+            let m = new Manga(it.serial, it.name, it.price, it.author, it.publisher, it.volumes);
+            m.addImage = it.image;
+            m.description = it.description;
+            let arrcat = [];
+            for (const cat of it.categories) {
+                arrcat.push(this.#modelStoreH.getCategory(cat));
+            }
+            this.#modelStoreH.addProduct(m, ...arrcat);
+            for (const store of it.stores) {
+                this.#modelStoreH.addProductInStore(m, new Store("test", store.store), store.stock)
+            }
+        }
+
+        for (const it of jsonObject.PRODUCTS.PLANT) {
+            let p = new Plant(it.serial, it.name, it.price, it.ambient, it.leaf, it.flower, it.color);
+            p.addImage = it.image;
+            p.description = it.description;
+            let arrcat = [];
+            for (const i of it.categories) {
+                arrcat.push(this.#modelStoreH.getCategory(i));
+            }
+            this.#modelStoreH.addProduct(p, ...arrcat);
+            for (const store of it.stores) {
+                this.#modelStoreH.addProductInStore(p, new Store("test", store.store), store.stock)
+            }
+        }
+        for (const it of jsonObject.PRODUCTS.FURNITURE) {
+            let f = new Furniture(it.serial, it.name, it.price, it.material, it.width, it.height, it.deep);
+            f.addImage = it.image;
+            f.description = it.description;
+            let arrcat = [];
+            for (const i of it.categories) {
+                arrcat.push(this.#modelStoreH.getCategory(i));
+            }
+            this.#modelStoreH.addProduct(f, ...arrcat);
+            for (const store of it.stores) {
+                this.#modelStoreH.addProductInStore(f, new Store("test", store.store), store.stock)
+            }
+        }
+    }
+
+    handleExportJSON = () => {
+        let actualData = {
+            STORES: [],
+            CATEGORIES: [],
+            PRODUCTS: {
+                MANGA: [],
+                PLANT: [],
+                FURNITURE: []
+            }
+        }
+        for (const i of this.#modelStoreH.categories) {
+            actualData.CATEGORIES.push(i.toJSONObject());
+        }
+        for (const i of this.#modelStoreH.stores) {
+            actualData.STORES.push(i.toJSONObject());
+        }
+        for (const store of this.#modelStoreH) {
+            for (const product of store[1].products) {
+                let type = product[1].product.__proto__.constructor.name;
+                type = type.split("Intern")[1].toUpperCase();
+
+                let pos = actualData.PRODUCTS[type].findIndex(elem => {
+                    return elem.serial == product[0];
+                })
+
+                if (pos == -1) {
+                    let obj = product[1].product.toJSONObject();
+                    obj.stores = [
+                        {
+                            store: store[1].store.cif,
+                            stock: product[1].stock
+                        }
+                    ]
+                    obj.categories = [...product[1].categories];
+                    actualData.PRODUCTS[type].push(obj);
+                } else {
+                    actualData.PRODUCTS[type][pos].stores.push(
+                        {
+                            store: store[1].store.cif,
+                            stock: product[1].stock
+                        }
+                    )
+                }
+            }
+        }
+
+
+
+        let obj = {
+            date: new Date(),
+            actualData: actualData,
+            createdData: this.#createdData,
+            deletedData: this.#deletedData
+        }
+        let date = new Date();
+        let fileName = "" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ".json";
+        var history = JSON.stringify(obj);
+        var blob = new Blob([history], {
+            type: "application/json;charset=utf-8"
+        });
+        saveAs(blob, fileName);
+
     }
 
     onInit = () => {
@@ -202,6 +327,7 @@ class StoreHouseController {
     handleCreateCategory = (title, desc) => {
         let cat = new Category(title, desc);
         let done, error;
+        let created = cat.toJSONObject();
         try {
             this.#modelStoreH.addCategory(cat);
             done = true;
@@ -209,7 +335,8 @@ class StoreHouseController {
             done = false;
             error = exception;
         }
-        this.#viewStoreH.showNewCategoryModal(done, "Categoría", cat.title, "category", "creado correctamente", "ya existe", error);
+        if (done) this.#createdData.CATEGORIES.push(created);
+        this.#viewStoreH.showNewModal(done, "Categoría", cat.title, "category", "creado correctamente", "ya existe", error);
         this.handleDisplayWholeInterface();
     }
 
@@ -225,6 +352,7 @@ class StoreHouseController {
         let store = new Store(name, cif, coordenada);
         if (address != "") store.address = address;
         if (phone != "") store.phone = phone;
+        let created = store.toJSONObject();
         try {
             this.#modelStoreH.addStore(store);
             done = true;
@@ -232,6 +360,7 @@ class StoreHouseController {
             done = false;
             error = exception
         }
+        if (done) this.#createdData.STORES.push(created);
         this.#viewStoreH.showNewModal(done, "Tienda", store.name, "store", "creado correctamente", "ya existe", error);
         this.handleDisplayWholeInterface();
     }
@@ -243,6 +372,7 @@ class StoreHouseController {
     handleRemoveCategory = (cat) => {
         let category = new Category(cat);
         let done, error;
+        let deleted = category.toJSONObject();
         try {
             this.#modelStoreH.removeCategory(category);
             done = true;
@@ -250,6 +380,7 @@ class StoreHouseController {
             done = false;
             error = exception;
         }
+        if (done) this.#deletedData.CATEGORIES.push(deleted);
         this.#viewStoreH.showRemoveModal(done, "Category", cat, "category", "eliminado correctamente", "no existe el producto.", error);
         this.handleDisplayWholeInterface();
     }
@@ -261,6 +392,7 @@ class StoreHouseController {
     handleRemoveStore = (str) => {
         let store = new Store("test", str);
         let done, error;
+        let deleted = store.toJSONObject();
         try {
             this.#modelStoreH.removeStore(store);
             done = true;
@@ -268,6 +400,7 @@ class StoreHouseController {
             done = false;
             error = exception;
         }
+        if (done) this.#deletedData.STORES.push(deleted);
         this.#viewStoreH.showRemoveModal(done, "Store", str, "store", "eliminado correctamente", "no existe el producto.", error);
         this.handleDisplayWholeInterface();
     }
@@ -281,6 +414,7 @@ class StoreHouseController {
 
     handleCreatePlant = (prod) => {
         let done, error;
+        let created;
         try {
             let plant = new Plant(prod.code, prod.name, prod.price, prod.ambient, prod.leaf, prod.flower, prod.color);
             plant.description = prod.desc;
@@ -289,18 +423,25 @@ class StoreHouseController {
             for (const it of prod.categories) {
                 categories.push(new Category(it));
             }
+            created = {
+                product: plant.toJSONObject(),
+                categories: [...prod.categories],
+                store: "storehouse"
+            }
             this.#modelStoreH.addProduct(plant, ...categories);
             done = true;
         } catch (exception) {
             done = false;
             error = exception;
         }
+        if (done) this.#createdData.PRODUCTS.PLANT.push(created);
         this.#viewStoreH.showNewModal(done, "Planta", prod.name, "plant", "creada correctamente", "ya existe", error);
         this.handleDisplayWholeInterface();
     }
 
     handleCreateManga = (prod) => {
         let done, error;
+        let created;
         try {
             let manga = new Manga(prod.code, prod.name, prod.price, prod.author, prod.publisher);
             manga.description = prod.desc;
@@ -309,19 +450,25 @@ class StoreHouseController {
             for (const it of prod.categories) {
                 categories.push(new Category(it));
             }
+            created = {
+                product: manga.toJSONObject(),
+                categories: [...prod.categories],
+                store: "storehouse"
+            }
             this.#modelStoreH.addProduct(manga, ...categories);
-
             done = true;
         } catch (exception) {
             done = false;
             error = exception;
         }
+        if (done) this.#createdData.PRODUCTS.MANGA.push(created);
         this.#viewStoreH.showNewModal(done, "Manga", prod.name, "manga", "creado correctamente", "ya existe", error);
         this.handleDisplayWholeInterface();
     }
 
     handleCreateFurniture = (prod) => {
         let done, error;
+        let created;
         try {
             let furniture = new Furniture(prod.code, prod.name, prod.price, prod.type, prod.width, prod.height, prod.deep);
             furniture.description = prod.desc;
@@ -330,12 +477,18 @@ class StoreHouseController {
             for (const it of prod.categories) {
                 categories.push(new Category(it));
             }
+            created = {
+                product: furniture.toJSONObject(),
+                categories: [...prod.categories],
+                store: "storehouse"
+            }
             this.#modelStoreH.addProduct(furniture, ...categories);
             done = true;
         } catch (exception) {
             done = false;
             error = exception;
         }
+        if (done) this.#createdData.PRODUCTS.FURNITURE.push(created);
         this.#viewStoreH.showNewModal(done, "Mueble", prod.name, "furniture", "creado correctamente", "ya existe", error);
         this.handleDisplayWholeInterface();
     }
@@ -347,13 +500,20 @@ class StoreHouseController {
 
     handleAddProdIntoStore = (obj) => {
         let done, error;
+        let added
         try {
+            added = {
+                product: this.#modelStoreH.getProduct(obj.product).product.toJSONObject(),
+                store: obj.store,
+                stock: obj.units
+            }
             this.#modelStoreH.addQuantityProductInStore(this.#modelStoreH.getProduct(obj.product).product, new Store("test", obj.store), obj.units);
             done = true;
         } catch (exception) {
             done = false;
             error = exception;
         }
+        if (done) this.#createdData.PRODUCTS.ADDEDTOSTORE.push(added);
         this.#viewStoreH.showNewModal(done, "Producto en tienda", obj.product, "addProductStore", `añadido correctamente en ${obj.store}`, "ha habido un error.", error);
         this.handleDisplayWholeInterface();
     }
@@ -365,15 +525,21 @@ class StoreHouseController {
     handleRemoveProd = (prod) => {
         let done, error;
         let name = "Error";
+        let deleted;
         try {
             let product = this.#modelStoreH.getProduct(prod.product);
             name = product.product.name;
+            deleted = {
+                product: product.product.toJSONObject(),
+                store: "storehouse"
+            }
             this.#modelStoreH.removeProduct(product.product);
             done = true;
         } catch (exception) {
             done = false;
             error = exception;
         }
+        if (done) this.#deletedData.PRODUCTS.push(deleted);
         this.#viewStoreH.showRemoveModal(done, "Producto", name, "prod", "eliminado correctamente", "no existe el producto.", error);
         this.handleDisplayWholeInterface();
     }
@@ -385,16 +551,22 @@ class StoreHouseController {
     handleRemoveProdfromStore = (prod) => {
         let done, error;
         let nameP = "Error";
+        let deleted;
         try {
             let product = this.#modelStoreH.getProduct(prod.product);
             let store = new Store("test", prod.store);
             nameP = product.product.name;
+            deleted = {
+                product: product.product.toJSONObject(),
+                store: store.toJSONObject()
+            }
             this.#modelStoreH.removeProductFromStore(product.product, store);
             done = true;
         } catch (exception) {
             done = false;
             error = exception;
         }
+        if (done) this.#deletedData.PRODUCTS.push(deleted);
         this.#viewStoreH.showRemoveModal(done, "Producto", nameP, "prodStore", `eliminado correctamente`, "no existe el producto.", error);
         this.handleDisplayWholeInterface();
     }
@@ -416,7 +588,8 @@ class StoreHouseController {
             this.handleNewProdForm,
             this.handleAddProdIntoStoreForm,
             this.handleRemProdForm,
-            this.handleRemProdFromStoreForm);
+            this.handleRemProdFromStoreForm,
+            this.handleExportJSON);
 
         $("#bLogin").attr("disable", true);
     }

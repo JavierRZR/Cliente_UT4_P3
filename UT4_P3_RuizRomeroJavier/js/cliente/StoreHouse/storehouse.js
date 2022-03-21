@@ -130,6 +130,10 @@ let StoreHouse = (function () {
                 return this.#stores.get("DEFAULT").products.get(product);
             }
 
+            getCategory(cat) {
+                return this.#categories.get(cat);
+            }
+
             /**
              * Añade una categoría al storehouse
              * @param {*} cat Category

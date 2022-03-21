@@ -6,10 +6,10 @@ class Category {
     #title;
     #description;
 
-    constructor(title = "",description="") {
+    constructor(title = "", description = "") {
         if (!(new.target)) throw new InvalidAccessConstructorException();
         if (!title) throw new EmptyValueException("Title");
-        
+
         this.#title = title.toUpperCase();
         this.#description = description;
     }
@@ -29,6 +29,13 @@ class Category {
 
     toString() {
         return `Title:${this.#title}  Description:${this.#description}`;
+    }
+
+    toJSONObject() {
+        return {
+            title: this.#title,
+            description: this.#description
+        }
     }
 
 }

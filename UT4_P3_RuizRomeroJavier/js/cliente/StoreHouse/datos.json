@@ -1,0 +1,304 @@
+{
+    "STORES": {
+        "data": [
+            {
+                "cif": "t98765432",
+                "name": "TO",
+                "coordx": "+72.32",
+                "coordy": "+55.121",
+                "address": "Paseo Universidad, 1, 13005 Ciudad Real, Cdad. Real",
+                "phone": "926232530"
+            },
+            {
+                "cif": "a54326789",
+                "name": "AL",
+                "coordx": "+123.123",
+                "coordy": "-0.12",
+                "address": "Rda. de Calatrava, 1, 13003 Ciudad Real, Cdad. Real",
+                "phone": "926221207"
+            },
+            {
+                "cif": "c01234567",
+                "name": "CR",
+                "coordx": "+90",
+                "coordy": "-12",
+                "address": "P.º de San Eugenio, 21, 45003 Toledo",
+                "phone": "925284043"
+            }
+        ]
+    },
+    "CATEGORIES": {
+        "data": [
+            {
+                "title": "Plant",
+                "description": "Just plants"
+            },
+            {
+                "title": "LECTURE",
+                "description": "Anything you can read"
+            },
+            {
+                "title": "DECORATION",
+                "description": "Decoration articles"
+            }
+        ]
+    },
+    "PRODUCTS": {
+        "MANGA": [
+            {
+                "serial": "0001",
+                "name": "Chainsawman",
+                "price": 8,
+                "author": "Tatsuki Fujimoto",
+                "publisher": "Norma Editorial",
+                "volumes": 13,
+                "image": "../../../img/products/mcsm01.jpg",
+                "description": "Denji es un chico sin un duro que se deja la piel trabajando como Devil Hunter junto a su perro demoníaco Pochita para resarcir una deuda astronómica, pero entonces... ¡¡una sangrienta traición da un giro radical a su miserable vida!!",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 6
+                    },
+                    {
+                        "store": "c01234567",
+                        "stock": 9
+                    }
+                ],
+                "categories": [
+                    "LECTURE"
+                ]
+            },
+            {
+                "serial": "0002",
+                "name": "One Piece",
+                "price": 6,
+                "author": "Eichiro Oda",
+                "publisher": "Norma Editorial",
+                "volumes": 103,
+                "image": "../../../img/products/mop01.jpg",
+                "description": "Sigue las aventuras de Monkey D. Luffy, un chico que sueña con ser el rey de los piratas y que se hace a la mar en un bote para buscar la tripulación que le pueda ayudar en ello. La serie más entretenida de televisión, ahora también en manga.",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 2
+                    },
+                    {
+                        "store": "a54326789",
+                        "stock": 9
+                    },
+                    {
+                        "store": "c01234567",
+                        "stock": 15
+                    }
+                ],
+                "categories": [
+                    "LECTURE"
+                ]
+            },
+            {
+                "serial": "0003",
+                "name": "Gokushufudou",
+                "price": 7.99,
+                "author": "OONO Kousuke",
+                "publisher": "Inmmortal Tatsu",
+                "volumes": 87,
+                "image": "../../../img/products/mgk01.jpg",
+                "description": "Es la historia de Tatsu el Inmortal, el hombre más mortífero de la mafia hasta que un día, después de un terrible incidente que lo dejó malherido, decidió apartarse del camino del yakuza y sentar la cabeza, para convertirse en el amo de casa ideal y devoto servidor de Miku, su laboriosa mujer. Sin embargo, por más que luche por dejar atrás su pasado entre clases de cocina, rutinas de gimnasio y actividades del barrio con las vecinas, el pasado está menos muerto de lo que él cree, y volverá para llevarlo por el mal camino de las maneras más rebuscadas, violentas y, por supuesto, hilarantes que pueda haber.",
+                "stores": [
+                    {
+                        "store": "a54326789",
+                        "stock": 12
+                    },
+                    {
+                        "store": "c01234567",
+                        "stock": 23
+                    }
+                ],
+                "categories": [
+                    "LECTURE"
+                ]
+            },
+            {
+                "serial": "0004",
+                "name": "Tokyo Revengers",
+                "price": "12.05",
+                "author": "Ken",
+                "publisher": "WAKUI",
+                "volumes": 242,
+                "image": "../../../img/products/mtk01.jpg",
+                "description": "Takemichi, un fracasado que fue miembro de una banda en su juventud, salta 12 años atrás en el tiempo para volver al instituto y salvar a su exnovia, Hina, que en la actualidad ha sido asesinada por la organización criminal Tokyo Manjikai. Con cada viaje temporal, Takemichi influye en los que le rodean y poco a poco va cambiando el pasado… ¿pero eso será suficiente para salvar a Hina y evitar que la Tokyo Manjikai se convierta en una temida banda criminal?",
+                "stores": [
+                    {
+                        "store": "a54326789",
+                        "stock": 4
+                    },
+                    {
+                        "store": "c01234567",
+                        "stock": 3
+                    }
+                ],
+                "categories": [
+                    "LECTURE"
+                ]
+            },
+            {
+                "serial": "0005",
+                "name": "Kaijin Reijoh",
+                "price": 8,
+                "author": "Tetsuya",
+                "publisher": "Tashiro",
+                "volumes": 6,
+                "image": "../../../img/products/mkr01.jpg",
+                "description": "En un mundo en el que los humanos se transforman en monstruos cuando caen en la desesperación y se dejan llevar por sus deseos más escabrosos, Asuma Sudô vive felizmente desentendido de estos problemas y su única motivación en la vida es manosear a las chicas del instituto. Sin embargo, todo cambia cuando un día le llega una petición para ingresar en el Instituto de chicas Meidô: ¡es un sueño hecho realidad! Pero lo que él ignora es que ese instituto, en realidad, ¡es una organización secreta para exterminar a los monstruos!",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 7
+                    }
+                ],
+                "categories": [
+                    "LECTURE"
+                ]
+            }
+        ],
+        "PLANT": [
+            {
+                "serial": "1001",
+                "name": "Páchira Aquática",
+                "price": 35,
+                "ambient": "humidity",
+                "leaf": "perennial",
+                "flower": "spring",
+                "color": "green",
+                "image": "../../../img/products/paq01.jpg",
+                "description": "Es de origen tropical, así que estará muy a gusto entre los 16 y 25 ºC. Lo mejor es que la tengas en el interior durante todo el año y solo en el exterior cuando no haya heladas.",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 2
+                    },
+                    {
+                        "store": "c01234567",
+                        "stock": 16
+                    }
+                ],
+                "categories": [
+                    "PLANT",
+                    "DECORATION"
+                ]
+            },
+            {
+                "serial": "1002",
+                "name": "Serpent",
+                "price": 17,
+                "ambient": "hot",
+                "leaf": "perennial",
+                "flower": "none",
+                "color": "dark green",
+                "image": "../../../img/products/psr01.jpg",
+                "description": "Si tu relación con las plantas es complicada, la sansevieria es tu mejor aliada. Es muy resistente así que tendrás que esforzarte bastante para acabar con ella. Se nutre de los despistes porque olvidarte de regarla es de lo mejor que le puede pasar. Es una planta muy agradecida para tener en el dormitorio ya que de día almacena oxígeno que libera mientras duermes, palabra de la NASA. A esta planta de hojas duras y puntiagudas se llama lengua de suegra o planta de la serpiente por su exótico estampado.",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 12
+                    }
+                ],
+                "categories": [
+                    "PLANT",
+                    "DECORATION"
+                ]
+            },
+            {
+                "serial": "1003",
+                "name": "Páchira Aquática",
+                "price": 21,
+                "ambient": "hot",
+                "leaf": "perennial",
+                "flower": "none",
+                "color": "black, green",
+                "image": "../../../img/products/pmd01.jpg",
+                "description": "Seguramente, a la Monstera Deliciosa se la conoce por este nombre monstruoso por sus hojas enormes y brillantes, mientras que su parte 'deliciosa' se debe a que en la selva mexicana, de donde es originaria, produce fruto. La razón para tener estos agujeros es que en su hábitat está acostumbrada a crecer en la sombra. Tener estos huecos permite que la poca luz que hay también le llegue a la parte inferior de la planta, lo tiene todo bajo control. La Planta del Queso necesita su espacio ya que se vuelve voluminosa y le aparecen raíces aéreas (sí, ¡en serio!) que en Perú se usan para hacer cuerdas.",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 8
+                    },
+                    {
+                        "store": "c01234567",
+                        "stock": 2
+                    }
+                ],
+                "categories": [
+                    "PLANT",
+                    "DECORATION"
+                ]
+            }
+        ],
+        "FURNITURE": [
+            {
+                "serial": "2001",
+                "name": "EKEDALEN",
+                "price": 350,
+                "material": "wood",
+                "width": 50,
+                "height": 100,
+                "deep": 35,
+                "image": "../../../img/products/fek01.jpg",
+                "description": "Está diseñada de forma que no presenta uniones cuando se usa sin extender. Regula el largo de la mesa según las actividades que se lleven a cabo como los deberes, dibujar o jugar con los niños. Las patas quedan siempre en las esquinas de la mesa, incluso cuando está extendida, de modo que el espacio de debajo se puede aprovechar mejor para poner sillas.",
+                "stores": [
+                    {
+                        "store": "a54326789",
+                        "stock": 8
+                    }
+                ],
+                "categories": [
+                    "DECORATION"
+                ]
+            },
+            {
+                "serial": "2002",
+                "name": "Secret Lab's chairs",
+                "price": 499,
+                "material": "cloth",
+                "width": 70,
+                "height": 130,
+                "deep": 50,
+                "image": "../../../img/products/fsl01.jpg",
+                "description": "Lo mejor de los modelos OMEGA y TITAN de Secretlab. Ahora en una sola silla. La silla Secretlab TITAN Evo 2022 combina varias tecnologías patentadas e innovaciones de diseño para ofrecer un nuevo nivel de soporte y rendimiento personalizados. Se trata de una comodidad galardonada. Mejorada aún más.",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 9
+                    }
+                ],
+                "categories": [
+                    "DECORATION"
+                ]
+            },
+            {
+                "serial": "2003",
+                "name": "ASARUM",
+                "price": 249.99,
+                "material": "cloth",
+                "width": 191,
+                "height": 73,
+                "deep": 84,
+                "image": "../../../img/products/fas01.jpg",
+                "description": "Un sofá cama de medidas reducidas, fácil de colocar incluso en espacios pequeños. Se convierte fácilmente en cama. Debajo del asiento puedes guardar ropa de cama, por ejemplo. Personaliza y aumenta el confort de tu sofá complementándolo con cojines de diferentes colores y estampados.",
+                "stores": [
+                    {
+                        "store": "t98765432",
+                        "stock": 1
+                    },
+                    {
+                        "store": "a54326789",
+                        "stock": 20
+                    }
+                ],
+                "categories": [
+                    "DECORATION"
+                ]
+            }
+        ]
+    }
+}

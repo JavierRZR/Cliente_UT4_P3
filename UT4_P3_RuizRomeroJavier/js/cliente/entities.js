@@ -98,11 +98,21 @@ let Product, Plant, Manga, Furniture;
 
         //METODOS PÚBLICOS
         toString() {
-            return `Serial:${this.#serial}  Name:${this.#name}  Price:${this.#price} Tax:${this.#tax}% Description:${this.#description} Images:${this.#images} ` ;
+            return `Serial:${this.#serial}  Name:${this.#name}  Price:${this.#price} Tax:${this.#tax}% Description:${this.#description} Images:${this.#images} `;
         }
 
         priceWithoutTaxes() {
             return this.#price - (this.#price * this.#tax);
+        }
+
+        toJSONObject() {
+            return {
+                serial: this.#serial,
+                name: this.#name,
+                price: this.#price,
+                description: this.#description,
+                image: this.#images[0]
+            }
         }
     }
     Object.defineProperty(InternProduct.prototype, "serial", { enumerable: true });
@@ -181,6 +191,16 @@ let Product, Plant, Manga, Furniture;
         toString() {
             return `${super.toString()} Ambient:${this.#ambient}  Leaf:${this.#leaf}  Flower${this.#flower} Color:${this.#color}`;
         }
+
+        toJSONObject() {
+            let prod = super.toJSONObject();
+            prod.ambient = this.#ambient;
+            prod.leaf = this.#leaf;
+            prod.flower = this.#flower;
+            prod.color = this.#color;
+
+            return prod;
+        }
     }
     Object.defineProperty(InternPlant.prototype, "ambient", { enumerable: true });
     Object.defineProperty(InternPlant.prototype, "leaf", { enumerable: true });
@@ -245,6 +265,15 @@ let Product, Plant, Manga, Furniture;
         //Métodos públicos
         toString() {
             return `${super.toString()} Author:${this.#author}  Publisher:${this.#publisher}  Volumes${this.#volumes}`;
+        }
+
+        toJSONObject() {
+            let prod = super.toJSONObject();
+            prod.author = this.#author;
+            prod.publisher = this.#publisher;
+            prod.volumes = this.#volumes;
+
+            return prod;
         }
     }
     Object.defineProperty(InternManga.prototype, "author", { enumerable: true });
@@ -313,7 +342,17 @@ let Product, Plant, Manga, Furniture;
         }
 
         toString() {
-            return`${super.toString()} Type:${this.#type}  Width:${this.#width}cm  Hight${this.#height}cm Deep:${this.#deep}cm`;
+            return `${super.toString()} Type:${this.#type}  Width:${this.#width}cm  Hight${this.#height}cm Deep:${this.#deep}cm`;
+        }
+
+        toJSONObject() {
+            let prod = super.toJSONObject();
+            prod.material = this.#type;
+            prod.width = this.#width;
+            prod.height = this.#height;
+            prod.deep = this.#deep;
+
+            return prod;
         }
     }
     Object.defineProperty(InternManga.prototype, "type", { enumerable: true });

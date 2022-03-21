@@ -75,6 +75,17 @@ class Store {
     toString() {
         return `Cif:${this.#cif} Name:${this.#name}  Address:${this.#address} Phone:${this.#phone}  ${this.#coords.toString()}`;
     }
+
+    toJSONObject() {
+        return {
+            cif: this.#cif,
+            name: this.#name,
+            coordx: this.#coords.latitude,
+            coordy: this.#coords.longitude,
+            address: this.#address,
+            phone: this.#phone
+        }
+    }
 }
 
 Object.defineProperty(Store.prototype, "cif", { enumerable: true });

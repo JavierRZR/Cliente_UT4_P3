@@ -347,10 +347,14 @@ class StoreHouseView {
                 <button id="remStore" type="button" class="btn btn-lg btn-danger value="remStore">Eliminar</button>
             </div>
             </div>
+            <div class="text-center border-bottom p-3">
+                <p class="h5 fw-bold">EXPORTAR CAMBIOS A JSON</p>
+                <button id="json" type="button" class="btn btn-lg btn-warning value="addStore">EXPORTAR</button>
+            </div>
         `)
     }
 
-    bindAdminMenu(hNewCategory, hNewStore, hRemCat, hRemStore, hNewProd, hAddProdIntoStore, hRemProd, hRemProdFromStore) {
+    bindAdminMenu(hNewCategory, hNewStore, hRemCat, hRemStore, hNewProd, hAddProdIntoStore, hRemProd, hRemProdFromStore, hExportJSON) {
         $('#addCat').click(() => {
             hNewCategory();
         });
@@ -375,7 +379,9 @@ class StoreHouseView {
         $('#remProdFromStore').click(() => {
             hRemProdFromStore();
         });
-
+        $('#json').click(() => {
+            hExportJSON();
+        });
     }
 
     bindNewCategoryForm(handler) {
@@ -1147,7 +1153,6 @@ class StoreHouseView {
     }
 
     showLoginInfo(user, date) {
-        console.log(user("User"));
         user = user("User");
         this.login.empty();
         if (user) {
